@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<script type="text/javascript" src="wordcloud2.js"></script>
+</head>
+<body>
+
+<p>Click the button to display an alert box:</p>
+<button onclick="myFunction()">Try it</button>
+
+<div id="content">
+	<canvas id="my_canvas"></canvas>
+</div>
+<script>
+function myFunction() {
+	var list = [['foo', 12], ['bar', 6]];
+	console.log("Working?");
+	WordCloud(document.getElementById('my_canvas'), { list: list } );
+}
+</script>
+
+</body>
+</html>
