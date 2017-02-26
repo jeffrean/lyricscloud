@@ -14,22 +14,27 @@
 	</head>
 	<body>
 		<div id="content">
-			<canvas id="my_canvas" width="500" height="350" ></canvas>
+			<canvas id="my_canvas" width="600" height="350" ></canvas>
 			<script>
-//				var list = [['foo', 12], ['bar', 6]];
 				var wordfreq = WordFreq({
 					workerUrl: "wordfreq.worker.js",
 					stopWords: true
 				});
 				wordfreq.process(text, function(list) {
-					WordCloud(document.getElementById('my_canvas'), {
+					if(list.length >250) {
+						list = list.splice(0, 250);
+					}
+					var cloud = WordCloud(document.getElementById('my_canvas'), {
 						list: list,
 						gridSize: 13,
 						weightFactor: 8,
 						backgroundColor: "white",
 						maxRotation: 0,
 						minRotation: 0,
-						drawOutOfBound: true
+						drawOutOfBound: true,
+						click: function(item, dimension, event) {
+							console.log(item);
+						}
 					});
 				});
 			</script>
