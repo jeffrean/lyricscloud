@@ -1,12 +1,29 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Song Lyrics</title>
+		<title id="title">Song Lyrics</title>
 		<link rel="stylesheet" type="text/css" href="SongLyricsStyle.css"> 
+		<script type="text/javascript" src="jquery-3.1.1.js"></script>
 	</head>
 	<body>
+		<h1 id="header"> hi
+			<script>
+			if (typeof(Storage) !== "undefined") {
+				//establish title as word
+				var title = localStorage.getItem("titleChosen"); 
+				document.getElementById("title").innerHTML = title; 
+				//establish header as word
+				var word =  localStorage.getItem("wordChosen"); 
+				var stopSpot = word.indexOf(","); 
+			} else {
+			   document.getElementById("header").innerHTML = "Sorry, your browser does not support Web Storage...";
+			}
+			</script> 
+		</hi>	
 		<div id="lyrics">
 			hello hello i want to tell you something can you hear mehello hello i want to tell you something can you hear mehello hello i want to tell you something can you hear mehello hello i want to tell you something can you hear mehello hello i want to tell you something can you hear me 
+			<script type="text/javascript">
+			</script>
 		</div>
 		<div id="buttons">
 			<input type="button" VALUE="BackWC" onClick="history.go(-2);return true;">
