@@ -4,6 +4,7 @@
 		<meta charset="UTF-8">
 		<title id="title">Song List Title</title>
 		<link rel="stylesheet" type="text/css" href="SongListStyle.css"> 
+		<script type="text/javascript" src="jquery-3.1.1.js"></script>
 	</head>
 	<body>
 		<h1 id="header"> hi
@@ -23,7 +24,22 @@
 			</script> 
 		</h1> 
 		<div id="lyrics">
-			A list of songs by a certain artist or artist(s) which contain a certain word. This feature is initialized with one or more artists and a word. Ordered descending by frequency. 
+			A list of songs by a certain artist or artist(s) which contain a certain word. This feature is initialized with one or more artists and a word. Ordered descending by frequency.
+
+			<script> 
+				$(function(){
+				   $('li').click(function(){
+				   	  localStorage.setItem("songChosen", $(this).text()); 
+				   	  window.location = "SongLyrics.html";
+				   });
+				});
+				var arr = ["list (9)", "items", "here"];
+				$("#lyrics").append("<ul></ul>");
+				for(var i in arr) {
+				    var li = "<li>";
+				    $("#lyrics").append(li.concat(arr[i]))
+				}
+			</script> 
 		</div>
 		<div id="buttons">
 			<input type="button" VALUE="Back to word cloud" onClick="history.go(-1);return true;">
