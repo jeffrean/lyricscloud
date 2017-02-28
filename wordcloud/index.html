@@ -34,6 +34,8 @@
 						drawOutOfBound: true,
 						click: function(item, dimension, event) {
 							console.log(item);
+							localStorage.setItem("songchosen", item); 
+							window.location = "SongList.html"; 
 						}
 					});
 				});
