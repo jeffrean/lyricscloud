@@ -1,0 +1,23 @@
+body {
+	background-color: gray; 
+}
+h1 {
+	text-align: center; 
+}
+#lyrics {
+	width: 50%; 
+	height: auto; 
+	padding: 10px; 
+	margin-right: auto; 
+	margin-left: auto; 
+	text-align: center; 
+	background-color: rgba(0,0,0,0.7);
+	color: white; 
+}
+#buttons {
+	padding: 10; 
+	margin-right: auto; 
+	margin-left: auto; 
+	width: 60px; 
+	background-color: green;  
+}
