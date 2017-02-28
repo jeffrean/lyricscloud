@@ -2,16 +2,21 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Song List</title>
+		<title id="title">Song List Title</title>
 		<link rel="stylesheet" type="text/css" href="SongListStyle.css"> 
 	</head>
 	<body>
 		<h1 id="header"> hi
 			<script>
 			if (typeof(Storage) !== "undefined") {
-				var song =  localStorage.getItem("songchosen"); 
-				var stopSpot = song.indexOf(","); 
-			   document.getElementById("header").innerHTML = song.slice(0,stopSpot);
+				//establish title as word
+				var song = localStorage.getItem("songChosen"); 
+				var songStop = song.indexOf(","); 
+				document.getElementById("title").innerHTML = song.slice(0, songStop); 
+				//establish header as word
+				var word =  localStorage.getItem("wordChosen"); 
+				var stopSpot = word.indexOf(","); 
+			   document.getElementById("header").innerHTML = word.slice(0,stopSpot);
 			} else {
 			   document.getElementById("header").innerHTML = "Sorry, your browser does not support Web Storage...";
 			}
