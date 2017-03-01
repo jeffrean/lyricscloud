@@ -4,7 +4,8 @@
 <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
-<!--<script type="text/javascript" src="Auto-Complete.js"></script>-->
+<script type="text/javascript" src="getsongs.js"></script>
+<script type="text/javascript" src="getlyrics.js"></script>
 <link rel="stylesheet" type="text/css" href="style.css" />
 
   <meta charset="utf-8">
@@ -12,106 +13,126 @@
 </head>
 <body>
   <input id="project-search">
-  <button id="project-button">click me!!!</button>
+  <button id="project-button" onclick="callGetSongList();">click me!!!</button>
 
   <script>
+var data = {};
+var artists = [];
+var access_token = "viBFW_j39QZDdkY42kwsa__gzw6ng9P5iuaLoCf9xr4VAErPIB_9P2Jm1tpFbaVG";
 
-  var artists = [];
-  var access_token = "viBFW_j39QZDdkY42kwsa__gzw6ng9P5iuaLoCf9xr4VAErPIB_9P2Jm1tpFbaVG";
-
-  function getUrl(artist){
+function getUrl(artist) {
     return 'http://api.genius.com/search?q=' + artist + "&access_token=" + access_token;
-  }
+}
 
-  function requestArtists(url){
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == XMLHttpRequest.DONE) {
-                    parse(JSON.parse(xhr.responseText).response.hits);
-                }
-            }
-            xhr.open('GET', url, true);
-            xhr.setRequestHeader("Accept", "*/*");
-            xhr.send(null);
-
-  }
-
-  //returns true if elem -> items (false otherwise)
-        function containsArtist(artists, artist){
-            for(var i=0; i<artists.length; i++){
-                if(artists[i].name === artist.name){
-                    return true;
-                }
-            }
-            return false;
+function requestArtists(url) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+            parseArtists(JSON.parse(xhr.responseText).response.hits);
         }
+    }
+    xhr.open('GET', url, true);
+    xhr.setRequestHeader("Accept", "*/*");
+    xhr.send(null);
 
-  //parse artist from hits
-        function parse(hits){
-            artists = [];
-            //add new artists to list
-            for(var i=0; i<hits.length; i++){
-                if(hits[i] !== undefined && hits[i].result !== undefined &&
-                    hits[i].result.primary_artist !== undefined){
-                    var artist = {
-                        "name": hits[i].result.primary_artist.name,
-                        //"id": hits[i].result.primary_artist.id,
-                        "image_url": hits[i].result.primary_artist.image_url
-                    }
-                    //check if list already contains artist
-                    if(!containsArtist(artists, artist)){
-                        artists.push(artist);
-                    }
-                } else {
-                    console.log("undefined");
+}
+
+//returns true if elem -> items (false otherwise)
+function containsArtist(artists, artistName) {
+    for (var i = 0; i < artists.length; i++) {
+        if (artists[i].name.toLowerCase() == artistName.toLowerCase()) {
+            return true;
+        }
+    }
+    return false;
+}
+
+//parse artist from hits
+function parseArtists(hits) {
+    artists = [];
+    //add new artists to list
+    for (var i = 0; i < hits.length; i++) {
+        if (hits[i] !== undefined && hits[i].result !== undefined &&
+            hits[i].result.primary_artist !== undefined) {
+            var artist = {
+                    "name": hits[i].result.primary_artist.name,
+                    //"id": hits[i].result.primary_artist.id,
+                    "image_url": hits[i].result.primary_artist.image_url
                 }
+                //check if list already contains artist
+            if (!containsArtist(artists, artist.name)) {
+                artists.push(artist);
             }
-
+        } else {
+            console.log("undefined");
         }
+    }
 
-        function search(artist){
-          requestArtists(getUrl(artist));
-        }
+}
 
-  (function($){
+function search(artist) {
+    requestArtists(getUrl(artist));
+}
+
+(function($) {
 
     var $project = $('#project-search');
 
-    $project.autocomplete(
-    {
-      minLength: 0,
-      source:function(request, response){
-        search(request.term);
-        response(artists);
-      },
-      focus: function( event, ui ) {
-        $project.val( ui.item.name );
-        return false;
-      }
+    $project.autocomplete({
+        minLength: 0,
+        source: function(request, response) {
+            search(request.term);
+            response(artists);
+        },
+        focus: function(event, ui) {
+            $project.val(ui.item.name);
+            return false;
+        },
+        select: function(event, ui) {
+            return false;
+        }
     });
 
-    $project.data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+    $project.data("ui-autocomplete")._renderItem = function(ul, item) {
 
-      var $li = $('<li>'),
-          $img = $('<img>');
+        var $li = $('<li>'),
+            $img = $('<img>');
 
 
-      $img.attr({
-        src: item.image_url,
-        alt: item.name,
-        width: 50,
-        height: 50
-      });
+        $img.attr({
+            src: item.image_url,
+            alt: item.name,
+            width: 50,
+            height: 50
+        });
 
-      $li.attr('data-value', item.name);
-      $li.append('<a href="#">');
-      $li.find('a').append($img).append(item.name);
+        $li.attr('data-value', item.name);
+        $li.append('<a href="#">');
+        $li.find('a').append($img).append(item.name);
 
-      return $li.appendTo(ul);
+        return $li.appendTo(ul);
     };
 
 
-  })(jQuery);
+})(jQuery);
+
+function callGetLyrics(artist, songs){
+    var lyricsList = getLyricsList(artist, songs);
+    data["name"] = artist;
+    data["songs"] = lyricsList;
+    console.log(data);
+}
+
+function callGetSongList() {
+    var artist = document.getElementById("project-search").value;
+    if (containsArtist(artists, artist)) {
+        var songs = getSongList(artist);
+        alert(songs.length);
+        callGetLyrics(artist, songs);
+    } else {
+        alert("Please enter a valid artist name!");
+    }
+}
   </script>
 </body>
 </html>

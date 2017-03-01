@@ -26,7 +26,6 @@ function containsSong(songList , song) {
 
 function parseSongs(body) {
     var track_list = body.message.body.track_list;
-
     for (var i = 0; i < track_list.length; i++) {
         var song = track_list[i].track.track_name;
         if (!containsSong(songList , song)) {
