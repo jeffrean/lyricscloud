@@ -42,8 +42,8 @@
 				var artist = JSON.parse(localStorage.getItem("lyrics"));
 				for(var i = 0; i < artist.songs.length; i++)
 				{
-					var lyrics = artist.songs[i].lyrics;
-					var count = (lyrics.match(new RegExp(word, "ig")) || []).length;
+					var lyrics = artist.songs[i].lyrics + ' ';
+					var count = (lyrics.match(new RegExp(word + ' ', "ig")) || []).length;
 					if(count > 0)
 					{
 						songs.push( {song: artist.songs[i].title,
