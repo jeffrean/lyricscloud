@@ -4,7 +4,7 @@
 <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
-<script type="text/javascript" src="Auto-Complete.js"></script>
+<!--<script type="text/javascript" src="Auto-Complete.js"></script>-->
 <link rel="stylesheet" type="text/css" href="style.css" />
 
   <meta charset="utf-8">
@@ -15,30 +15,77 @@
   <button id="project-button">click me!!!</button>
 
   <script>
+
+  var artists = [];
+  var access_token = "viBFW_j39QZDdkY42kwsa__gzw6ng9P5iuaLoCf9xr4VAErPIB_9P2Jm1tpFbaVG";
+
+  function getUrl(artist){
+    return 'http://api.genius.com/search?q=' + artist + "&access_token=" + access_token;
+  }
+
+  function requestArtists(url){
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    parse(JSON.parse(xhr.responseText).response.hits);
+                }
+            }
+            xhr.open('GET', url, true);
+            xhr.setRequestHeader("Accept", "*/*");
+            xhr.send(null);
+
+  }
+
+  //returns true if elem -> items (false otherwise)
+        function containsArtist(artists, artist){
+            for(var i=0; i<artists.length; i++){
+                if(artists[i].name === artist.name){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+  //parse artist from hits
+        function parse(hits){
+            artists = [];
+            //add new artists to list
+            for(var i=0; i<hits.length; i++){
+                if(hits[i] !== undefined && hits[i].result !== undefined &&
+                    hits[i].result.primary_artist !== undefined){
+                    var artist = {
+                        "name": hits[i].result.primary_artist.name,
+                        //"id": hits[i].result.primary_artist.id,
+                        "image_url": hits[i].result.primary_artist.image_url
+                    }
+                    //check if list already contains artist
+                    if(!containsArtist(artists, artist)){
+                        artists.push(artist);
+                    }
+                } else {
+                    console.log("undefined");
+                }
+            }
+
+        }
+
+        function search(artist){
+          requestArtists(getUrl(artist));
+        }
+
   (function($){
 
     var $project = $('#project-search');
 
-    var projects = [
-      {
-        label: "jQuery",
-        icon: "jquery_32x32.png"
-      },
-      {
-        label: "jQuery UI",
-        icon: "jqueryui_32x32.png"
-      },
-      {
-        label: "Sizzle JS",
-        icon: "sizzlejs_32x32.png"
-      }
-    ];
-
-    $project.autocomplete({
+    $project.autocomplete(
+    {
       minLength: 0,
-      source: projects,
+      source:function(request, response){
+        search(request.term);
+        response(artists);
+      },
       focus: function( event, ui ) {
-        $project.val( ui.item.label );
+        $project.val( ui.item.name );
         return false;
       }
     });
@@ -50,20 +97,21 @@
 
 
       $img.attr({
-        src: 'https://jqueryui.com/resources/demos/autocomplete/images/' + item.icon,
-        alt: item.label
+        src: item.image_url,
+        alt: item.name,
+        width: 50,
+        height: 50
       });
 
-      $li.attr('data-value', item.label);
+      $li.attr('data-value', item.name);
       $li.append('<a href="#">');
-      $li.find('a').append($img).append(item.label);
+      $li.find('a').append($img).append(item.name);
 
       return $li.appendTo(ul);
     };
 
 
   })(jQuery);
-
   </script>
 </body>
 </html>
