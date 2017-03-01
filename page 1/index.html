@@ -4,8 +4,8 @@
 <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
-<script type="text/javascript" src="getsongs.js"></script>
-<script type="text/javascript" src="getlyrics.js"></script>
+<!--<script type="text/javascript" src="getsongs.js"></script>
+<script type="text/javascript" src="getlyrics.js"></script>-->
 <link rel="stylesheet" type="text/css" href="style.css" />
 
   <meta charset="utf-8">
@@ -17,6 +17,7 @@
 
   <script>
 var data = {};
+var artist = "";
 var artists = [];
 var access_token = "viBFW_j39QZDdkY42kwsa__gzw6ng9P5iuaLoCf9xr4VAErPIB_9P2Jm1tpFbaVG";
 
@@ -120,18 +121,159 @@ function callGetLyrics(artist, songs){
     var lyricsList = getLyricsList(artist, songs);
     data["name"] = artist;
     data["songs"] = lyricsList;
-    console.log(data);
 }
 
 function callGetSongList() {
-    var artist = document.getElementById("project-search").value;
+   artist = document.getElementById("project-search").value;
     if (containsArtist(artists, artist)) {
-        var songs = getSongList(artist);
-        alert(songs.length);
-        callGetLyrics(artist, songs);
+        getSongList(artist);
     } else {
         alert("Please enter a valid artist name!");
     }
+}///////////////////////////////////////////////// song
+var songList = [];
+
+/*function getSongsUrl(artist) {
+    return "https://api.musixmatch.com/ws/1.1/track.search?format=jsonp&callback=callback&q_artist=" + artist + "&quorum_factor=1&apikey=902908a8c199f254a1b29d864f9398a4&page_size=30";
+};*/
+
+function mySongCallback(json){
+  console.log('callback function');
+  parseSongs(json);
+  console.log(1);
+  console.log(songList);
+  console.log(songList.length);
+  console.log(2);
+  callGetLyrics(artist, songList);
+}
+
+/*function requestSongs(url) {
+    /*var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+            parseSongs(JSON.parse(xhr.responseText.substring(9, xhr.responseText.length - 2)));
+        }
+    }
+
+
+    xhr.open('GET', url, true);
+    xhr.send(null);
+  }*/
+  function requestSongs(artist) {
+    $.ajax({
+      url: 'https://api.musixmatch.com/ws/1.1/track.search',
+      data: {
+        q_artist: artist,
+        format: 'jsonp',
+        quorum_factor: 1,
+        apikey: '902908a8c199f254a1b29d864f9398a4',
+        page_size: 30,
+      },
+      dataType: 'jsonp' ,
+      jsonp: 'callback',
+      jsonpCallback: 'mySongCallback',
+    });
+
+
+}
+
+function containsSong(songList , song) {
+    for (var i = 0; i < songList .length; i++) {
+        if (songList[i] === song) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function parseSongs(body) {
+    var track_list = body.message.body.track_list;
+    for (var i = 0; i < track_list.length; i++) {
+        var song = track_list[i].track.track_name;
+        if (!containsSong(songList , song)) {
+            songList.push(song);
+        }
+    }
+
+}
+
+function getSongList(artist) {
+    //var url = getSongsUrl(artist);
+    //requestSongs(url);
+    requestSongs(artist);
+}
+
+//////////////////////////////////////////////////
+var lyrics = [];
+
+/*function getLyricsUrl(artist, song) {
+    return "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + song + "&q_artist=" + artist + "&apikey=902908a8c199f254a1b29d864f9398a4";
+}*/
+
+/*function requestLyrics(url, currentSong) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+            parseLyrics(JSON.parse(xhr.responseText.substring(9, xhr.responseText.length - 2)), currentSong);
+        }
+    }
+    xhr.open('GET', url, true);
+    xhr.send(null);
+  }*/
+  function myLyricsCallback(json){
+    console.log('callback function');
+    console.log(3);
+    console.log(json);
+    console.log(4);
+    parseLyrics(json);
+    console.log(33);
+    console.log(lyrics);
+    console.log(lyrics.length);
+    console.log(44);
+  }
+    function requestLyrics(artist, currentSong) {
+    $.ajax({
+      url: 'https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?',
+      data: {
+        q_track: currentSong,
+        q_artist: artist,
+        format: 'jsonp',
+        apikey: '902908a8c199f254a1b29d864f9398a4',
+      },
+      dataType: 'jsonp' ,
+      jsonp: 'callback',
+      jsonpCallback: function (jsonp){
+        console.log('callback function');
+        console.log(3);
+        console.log(jsonp);
+        console.log(4);
+        parseLyrics(jsonp,currentSong);
+        console.log(33);
+        console.log(lyrics);
+        console.log(lyrics.length);
+        console.log(44);
+      },
+    });
+
+}
+
+function parseLyrics(body, currentSong) {
+        var lyric = body.message.body.lyrics.lyrics_body;
+        lyrics.push({
+            "title": currentSong,
+            "lyrics": lyric.split("*")[0]
+        });
+}
+
+function getLyricsList(artist, songs) {
+    var currentSong;
+    for (var i = 0; i < songs.length; i++) {
+        currentSong = songs[i];
+        requestLyrics(artist, currentSong);
+    }
+
+    //setTimeout(function(){}, 1000);
+    //return lyrics;
 }
   </script>
 </body>
