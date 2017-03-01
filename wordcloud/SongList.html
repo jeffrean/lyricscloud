@@ -50,7 +50,14 @@
 									count: count});
 					}
 				}
-				var song_list = [];
+				songs.sort(function (a, b) {
+					if (a.count === b.count) {
+						return 0;
+					}
+					else {
+						return (a.count < b.count) ? 1 : -1;
+					}
+				});
 				$("#lyrics").append("<ul></ul>");
 				for(var i in songs) {
 				    var li = "<li>";
