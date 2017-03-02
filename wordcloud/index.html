@@ -7,14 +7,12 @@
 <script type="text/javascript" src="getsongs.js"></script>
 <script type="text/javascript" src="getlyrics.js"></script>
 <link rel="stylesheet" type="text/css" href="style.css" />
-<link rel="import" href="wordcloud.html" + artist>
 
   <meta charset="utf-8">
   <title>Page 1</title>
 </head>
 <body>
 	<div id="search">
-		<div id="wordcloud"></div>
 		<input id="project-search">
 		<button id="project-button" onclick="callGetSongList();">Search</button>
 	</div>
@@ -23,6 +21,7 @@ var data = {};
 var artist = "";
 var artists = [];
 var access_token = "viBFW_j39QZDdkY42kwsa__gzw6ng9P5iuaLoCf9xr4VAErPIB_9P2Jm1tpFbaVG";
+
 
 function getUrl(artist) {
 	return 'getArtists.php?artist=' + artist + '*';
@@ -137,6 +136,10 @@ function callGetSongList() {
         alert("Please enter a valid artist name!");
     }*/
     window.location.href = "wordcloud.html?artist=" + artist;
+   /*localStorage.setItem("artist", artist);
+	$(function(){
+		$("#wordcloud").load("wordcloud.html");
+	});*/
 }
 
   </script>
