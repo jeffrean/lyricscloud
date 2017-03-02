@@ -6,12 +6,13 @@
 		<script type="text/javascript" src="jquery-3.1.1.js"></script>
 	</head>
 	<body>
-		<h1 id="header"> hi
+		<h1 id="header">
 			<script>
 			if (typeof(Storage) !== "undefined") {
 				//establish title as word
 				var title = localStorage.getItem("titleChosen"); 
-				document.getElementById("title").innerHTML = title; 
+				document.getElementById("title").innerHTML = title;
+				document.getElementById("header").innerHTML = title; 
 				//establish header as word
 				var word =  localStorage.getItem("wordChosen"); 
 				var stopSpot = word.indexOf(",");
@@ -48,8 +49,8 @@
 			}
 		</script>
 		<div id="buttons">
-			<input type="button" VALUE="BackWC" onClick="history.go(-2);return true;">
-			<input type="button" VALUE="BackSL" onClick="history.go(-1);return true;">
+			<input type="button" VALUE="BackWC" onClick="history.go(-2);return true;" style="background-color: purple">
+			<input type="button" VALUE="BackSL" onClick="history.go(-1);return true;" style="background-color: purple">
 		</div> 	
 	</body>
 </html>
