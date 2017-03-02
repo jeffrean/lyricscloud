@@ -33,7 +33,7 @@ function requestArtists(url) {
         }
     }
     xhr.open('GET', url, true);
-    xhr.setRequestHeader("Accept", "*/*");
+    xhr.setRequestHeader("Accept", "");
     xhr.send(null);
 
 }
@@ -117,8 +117,7 @@ function search(artist) {
 
 })(jQuery);
 
-function callGetLyrics(artist, songs){
-    var lyricsList = getLyricsList(artist, songs);
+function callGetLyrics(artist, lyricsList){
     data["name"] = artist;
     data["songs"] = lyricsList;
 }
