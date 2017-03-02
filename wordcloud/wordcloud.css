@@ -6,7 +6,7 @@ canvas {
 }
 #project-button {
     position: absolute;
-    left: 27.5%;
+    left: 34.75%;
     top: 70%;
 		width: 110px;
 		height: auto;
@@ -30,7 +30,7 @@ canvas {
 }
 #addTOCloud-button {
     position: absolute;
-    left: 39%;
+    left: 42%;
     top: 73.5%;
 		width: 110px;
 		height: auto;
@@ -42,7 +42,7 @@ canvas {
 
 #shareToFacebook-button {
     position: absolute;
-    left: 55%;
+    left: 53.5%;
     top: 73.5%;
 		width: 110px;
 		height: auto;
