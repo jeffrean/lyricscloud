@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="UTF-8">
+		<script type="text/javascript" src="wordcloud2.js"></script>
+		<script type="text/javascript" src="wordfreq.js"></script>
+		<link rel="stylesheet" type="text/css" href="index.css"> 
+		<style>
+			#content {
+				width: 50%;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="content">
+			<canvas id="my_canvas" width="600" height="350" ></canvas>
+			<script>
+				function readJSON(file) {
+					var request = new XMLHttpRequest();
+					request.open('GET', file, false);
+					request.send(null);
+					if (request.status == 200)
+						return request.responseText;
+				};
+				
+				function getParameterByName(name, url) {
+					 if (!url) {
+						url = window.location.href;
+					 }
+					 name = name.replace(/[\[\]]/g, "\\$&");
+					 var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+						  results = regex.exec(url);
+					 if (!results) return null;
+					 if (!results[2]) return '';
+					 return decodeURIComponent(results[2].replace(/\+/g, " "));
+				}
+				
+				var raw = readJSON('getLyrics.php?artist=' + getParameterByName('artist'));
+				var text = JSON.parse(raw);
+				var raw_lyrics = "";
+				console.log(text);
+				for(var i = 0; i < text.songs.length; i++)
+				{
+					raw_lyrics += ' ' + text.songs[i].lyrics;
+				}
+				localStorage.setItem("lyrics", raw);
+			
+				localStorage.setItem("songChosen", "Hello,"); 
+				var wordfreq = WordFreq({
+					workerUrl: "wordfreq.worker.js",
+					stopWords: true
+				});
+				wordfreq.process(raw_lyrics, function(list) {
+					if(list.length >250) {
+						list = list.splice(0, 250);
+					}
+					var cloud = WordCloud(document.getElementById('my_canvas'), {
+						list: list,
+						gridSize: 0,
+						weightFactor: 5,
+						backgroundColor: "white",
+						maxRotation: 0,
+						minRotation: 0,
+						drawOutOfBound: true,
+						click: function(item, dimension, event) {
+							console.log(item);
+							localStorage.setItem("wordChosen", item);
+							window.location = "SongList.html"; 
+						}
+					});
+				});
+			</script>
+		</div>
+	</body>
+</html>
