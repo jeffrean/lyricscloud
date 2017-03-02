@@ -14,14 +14,29 @@
 				margin: 0 auto;
 			}
 		</style>
+		<h1 id="header">
+		<script>
+			function getParameterByName(name, url) {
+				 if (!url) {
+					url = window.location.href;
+				 }
+				 name = name.replace(/[\[\]]/g, "\\$&");
+				 var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+					  results = regex.exec(url);
+				 if (!results) return null;
+				 if (!results[2]) return '';
+				 return decodeURIComponent(results[2].replace(/\+/g, " "));
+			}
+			document.getElementById("header").innerHTML = getParameterByName('artists');
+		</script> 
+		</hi>	
 	</head>
 	<body>
 		 <div id="search">
 			 <script>
 		 	     $(function(){
 						$("#search").load("index.html");
-					});
-					document.getElementById("header").innerHTML = getParameterByName('artists'); 
+					}); 
 			 </script>
 		</div>
 		<button id="addTOCloud-button" onclick="AddTOCloud();">Add to Cloud</button>
@@ -68,7 +83,6 @@
 						}
 						artists_data.push(raw);
 					}
-					console.log(artists_data);
 					localStorage.setItem("artistData", JSON.stringify(artists_data));
 					var wordfreq = WordFreq({
 						workerUrl: "wordfreq.worker.js",

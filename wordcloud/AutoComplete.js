@@ -63,11 +63,10 @@ function search(artist) {
 
 (function($) {
 
-    var $project = $('#project-search'););
+    var $project = $('#project-search');
     $project.autocomplete({
         minLength: 0,
         source: function(request, response) {
-        		console.log("hello");
             search(request.term);
             response(artists);
         },
