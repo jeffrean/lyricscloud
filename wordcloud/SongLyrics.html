@@ -6,12 +6,13 @@
 		<script type="text/javascript" src="jquery-3.1.1.js"></script>
 	</head>
 	<body>
-		<h1 id="header"> hi
+		<h1 id="header">
 			<script>
 			if (typeof(Storage) !== "undefined") {
 				//establish title as word
 				var title = localStorage.getItem("titleChosen"); 
-				document.getElementById("title").innerHTML = title; 
+				document.getElementById("title").innerHTML = title;
+				document.getElementById("header").innerHTML = title; 
 				//establish header as word
 				var word =  localStorage.getItem("wordChosen"); 
 				var stopSpot = word.indexOf(",");
@@ -21,24 +22,7 @@
 			</script> 
 		</hi>	
 		<div id="lyrics">
-			hello hello i want to tell you something can you hear mehello hello i want to tell you something can you hear mehello hello i want to tell you something can you hear mehello hello i want to tell you something can you hear mehello hello i want to tell you something can you hear me 
-			<script type="text/javascript">
-				var s = $("#lyrics").text();
-				console.log(s);
-				var a = s.split(" ");
-				//console.log(a);
-
-				//when iterating through make sure there are no endlines or spaces
-
-				for (i = 0; i < a.length; i++) {
-				  //  document.getElementById("updateAvailable_" + a[i]).style.visibility = "visible";
-				  var q = a[i].trim();
-				  a[i] = q;
-				}
-
-				console.log(a);
-
-			</script>
+			
 		</div>
 		<script type="text/javascript">
 			var artists = JSON.parse(localStorage.getItem("lyrics"));
@@ -47,13 +31,26 @@
 			{
 				if(artists.songs[i].title == title)
 				{
-					document.getElementById("lyrics").innerHTML = artists.songs[i].lyrics;
+					//document.getElementById("lyrics").innerHTML = artists.songs[i].lyrics;
+					var lyricsString = artists.songs[i].lyrics;
+					var lyricsSplitArray = lyricsString.split(" ");
+					for (var q = 0; q < lyricsSplitArray.length; q++) {
+						var trimmedWord = lyricsSplitArray[q].trim();
+						var moreTrimmedWord = word.split(",");
+						var newWord = moreTrimmedWord[0];
+						if (trimmedWord === newWord) {
+							$("#lyrics").append("<span style=color:yellow>" + trimmedWord + ' ' + "</span>"); 
+						}
+						else {
+							$("#lyrics").append(trimmedWord + ' '); 
+						}
+					}
 				}
 			}
 		</script>
 		<div id="buttons">
-			<input type="button" VALUE="BackWC" onClick="history.go(-2);return true;">
-			<input type="button" VALUE="BackSL" onClick="history.go(-1);return true;">
+			<input type="button" VALUE="BackWC" onClick="history.go(-2);return true;" style="background-color: purple">
+			<input type="button" VALUE="BackSL" onClick="history.go(-1);return true;" style="background-color: purple">
 		</div> 	
 	</body>
 </html>
