@@ -1,48 +1,61 @@
+<!--	File: SongLyrics.htlm
+		
+		Purpose: An HTML file that is responsible for
+		generating a list of song titles						-->
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title id="title">Song Lyrics</title>
-		<link rel="stylesheet" type="text/css" href="SongLyricsStyle.css"> 
-		<script type="text/javascript" src="jquery-3.1.1.js"></script>
-	</head>
+<head>
+<meta charset="UTF-8">
+<title id="title">Song Lyrics</title>
+<link rel="stylesheet" type="text/css" href="SongLyricsStyle.css"> 
+<script type="text/javascript" src="jquery-3.1.1.js"></script>
+</head>
 	<body>
 		<h1 id="header">
-			<script>
+		<script>
 			if (typeof(Storage) !== "undefined") {
 				//establish title as word
-				var title = localStorage.getItem("titleChosen"); 
-				document.getElementById("title").innerHTML = title;
-				document.getElementById("header").innerHTML = title; 
+				var title = localStorage.getItem("titleChosen");
+				var artist = localStorage.getItem("artistChosen");
+				document.getElementById("title").innerHTML = title + " by " + artist;
+				document.getElementById("header").innerHTML = title + " by " + artist; 
 				//establish header as word
 				var word =  localStorage.getItem("wordChosen"); 
 				var stopSpot = word.indexOf(",");
 			} else {
-			   document.getElementById("header").innerHTML = "Sorry, your browser does not support Web Storage...";
+				document.getElementById("header").innerHTML = "Sorry, your browser does not support Web Storage...";
 			}
-			</script> 
+		</script> 
 		</hi>	
-		<div id="lyrics">
-			
-		</div>
+		<div id="lyrics"></div>
 		<script type="text/javascript">
-			var artists = JSON.parse(localStorage.getItem("lyrics"));
+			// lyrics is stored from previous pages
+			var artists = JSON.parse(localStorage.getItem("artistData"));
 			var title = localStorage.getItem("titleChosen");
-			for(var i = 0; i < artists.songs.length; i++)
+			
+			// find the song title
+			for(var i = 0; i < artists.length; i++)
 			{
-				if(artists.songs[i].title == title)
+				var artist = JSON.parse(artists[i]);
+				for(var j = 0; j < artist.songs.length; j++)
 				{
-					//document.getElementById("lyrics").innerHTML = artists.songs[i].lyrics;
-					var lyricsString = artists.songs[i].lyrics;
-					var lyricsSplitArray = lyricsString.split(" ");
-					for (var q = 0; q < lyricsSplitArray.length; q++) {
-						var trimmedWord = lyricsSplitArray[q].trim();
-						var moreTrimmedWord = word.split(",");
-						var newWord = moreTrimmedWord[0];
-						if (trimmedWord === newWord) {
-							$("#lyrics").append("<span style=color:#e6ac00>" + trimmedWord + ' ' + "</span>"); 
-						}
-						else {
-							$("#lyrics").append(trimmedWord + ' '); 
+					if(artist.songs[j].title == title)
+					{
+						//document.getElementById("lyrics").innerHTML = artists.songs[i].lyrics;
+						var lyricsString = artist.songs[j].lyrics;
+						var lyricsSplitArray = lyricsString.split(" ");
+					
+						// for each word, check if we need to highlight
+						for (var q = 0; q < lyricsSplitArray.length; q++) {
+							var trimmedWord = lyricsSplitArray[q].trim();
+							var moreTrimmedWord = word.split(",");
+							var newWord = moreTrimmedWord[0];
+							if (trimmedWord === newWord) {
+								// highlight chosen word
+								$("#lyrics").append("<span style=background-color:#FFFF00>" + trimmedWord + "</span> "); 
+							}
+							else {
+								$("#lyrics").append(trimmedWord + ' '); 
+							}
 						}
 					}
 				}
@@ -51,6 +64,6 @@
 		<div id="buttons">
 			<input type="button" VALUE="BackWC" onClick="history.go(-2);return true;" style="background-color: purple">
 			<input type="button" VALUE="BackSL" onClick="history.go(-1);return true;" style="background-color: purple">
-		</div> 	
+		</div>
 	</body>
 </html>

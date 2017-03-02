@@ -10,62 +10,75 @@
 	<body>
 		<h1 id="header"> hi
 			<script>
-			if (typeof(Storage) !== "undefined") {
-				//establish title as word
-				var song = localStorage.getItem("songChosen"); 
-				var songStop = song.indexOf(","); 
-				document.getElementById("title").innerHTML = song.slice(0, songStop); 
-				//establish header as word
-				var word =  localStorage.getItem("wordChosen"); 
-				var stopSpot = word.indexOf(","); 
-			   document.getElementById("header").innerHTML = word.slice(0,stopSpot);
-			} else {
-			   document.getElementById("header").innerHTML = "Sorry, your browser does not support Web Storage...";
-			}
+				if (typeof(Storage) !== "undefined") {
+					//establish title as word
+					var song = localStorage.getItem("songChosen"); 
+					var songStop = song.indexOf(","); 
+					document.getElementById("title").innerHTML = song.slice(0, songStop); 
+					//establish header as word
+					var word =  localStorage.getItem("wordChosen"); 
+					var stopSpot = word.indexOf(","); 
+					document.getElementById("header").innerHTML = word.slice(0,stopSpot);
+				} else {
+					document.getElementById("header").innerHTML = "Sorry, your browser does not support Web Storage...";
+				}
 			</script> 
 		</h1> 
 		<div id="lyrics">
-
-			<script> 
-				$(function(){
-				   $('li').click(function(){
-					  var song_title_clicked = $(this).text();
-				   	  localStorage.setItem("titleChosen", song_title_clicked.substring(0, song_title_clicked.lastIndexOf(" "))); 
-				   	  window.location = "SongLyrics.html";
-				   });
+		<script>
+			$(function(){
+				$('li').click(function(){
+					var song_title_clicked = $(this).text();
+					song_title_clicked = song_title_clicked.substring(0, song_title_clicked.lastIndexOf(" "));
+					var songs = JSON.parse(localStorage.getItem("songsList"));
+					for(var i = 0; i < songs.length; i++)
+					{
+						if(songs[i].song == song_title_clicked)
+						{
+							localStorage.setItem("artistChosen", songs[i].artist);
+						}
+					}
+					localStorage.setItem("titleChosen", song_title_clicked); 
+					window.location = "SongLyrics.html";
 				});
-				var arr = ["list (9)", "items", "here"];
-				var word = localStorage.getItem("wordChosen");
-				word = word.slice(0,stopSpot);
-				var songs = [];
-				var artist = JSON.parse(localStorage.getItem("lyrics"));
-				for(var i = 0; i < artist.songs.length; i++)
+			});
+			var word = localStorage.getItem("wordChosen");
+			word = word.slice(0,stopSpot);
+			var songs = [];
+			var artists = JSON.parse(localStorage.getItem("artistData"));
+			for(var i = 0; i < artists.length; i++)
+			{
+				var artist = JSON.parse(artists[i]);
+				for(var j = 0; j < artist.songs.length; j++)
 				{
-					var lyrics = artist.songs[i].lyrics + ' ';
-					var count = (lyrics.match(new RegExp(word + ' ', "ig")) || []).length;
+					var artist_lyrics = artist.songs[j].lyrics + ' ';
+					var count = (artist_lyrics.match(new RegExp(word + ' ', "ig")) || []).length;
 					if(count > 0)
 					{
-						songs.push( {song: artist.songs[i].title,
-									count: count});
+						songs.push( {song: artist.songs[j].title,
+										artist: artist.name,
+										count: count});
 					}
 				}
-				songs.sort(function (a, b) {
-					if (a.count === b.count) {
-						return 0;
-					}
-					else {
-						return (a.count < b.count) ? 1 : -1;
-					}
-				});
-				$("#lyrics").append("<ul></ul>");
-				for(var i in songs) {
-				    var li = "<li>";
-				    $("#lyrics").append(li.concat(songs[i].song + " " + songs[i].count))
+			}
+			songs.sort(function (a, b) {
+				if (a.count === b.count) {
+					return 0;
 				}
-			</script> 
+				else {
+					return (a.count < b.count) ? 1 : -1;
+				}
+			});
+			localStorage.setItem("songsList", JSON.stringify(songs));
+			$("#lyrics").append("<ul></ul>");
+			for(var i in songs) {
+				var li = "<li>";
+				$("#lyrics").append(li.concat(songs[i].song + " (" + songs[i].count) + ')')
+			}
+		</script> 
 		</div>
-		<div id="buttons">
+			<div id="buttons">
 			<input type="button" VALUE="Back to word cloud" onClick="history.go(-1);return true;" style="background-color: purple">
-		</div> 	
+		</div>
 	</body>
 </html>

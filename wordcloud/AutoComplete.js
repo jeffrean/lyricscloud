@@ -63,11 +63,11 @@ function search(artist) {
 
 (function($) {
 
-    var $project = $('#project-search');
-
+    var $project = $('#project-search'););
     $project.autocomplete({
         minLength: 0,
         source: function(request, response) {
+        		console.log("hello");
             search(request.term);
             response(artists);
         },
@@ -115,5 +115,5 @@ function callGetSongList() {
     } else {
         alert("Please enter a valid artist name!");
     }*/
-    window.location.href = "wordcloud.html?artist=" + artist;
+    window.location.href = "wordcloud.html?artists=" + artist;
 }
