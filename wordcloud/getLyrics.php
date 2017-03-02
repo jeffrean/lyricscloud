@@ -1,68 +1,52 @@
 <?php 
+
+	//Obtains song titles and the associated lyrics from MusixMatch.com 
+	//The obtained data is put into an associative array structure and 
+	//encoded into a JSON format
+
 	$artist = $_GET["artist"];
-	$url = "http://api.musixmatch.com/ws/1.1/track.search?format=json&q_artist=" . $artist . "&quorum_factor=1&apikey=902908a8c199f254a1b29d864f9398a4&page_size=30";
-	$url_lyrics = "http://api.musixmatch.com/ws/1.1/track.lyrics.get?format=json&apikey=902908a8c199f254a1b29d864f9398a4&track_id=";
-	$response = file_get_contents($url);
-	$json_response = json_decode($response, true);
-	/*print_r($json_response);
-	
-	for($i = 0; $i < $json_response->message->body->track_list.length; $i++)
-	{
-		echo $$json_response->message->body->track_list[i]->track_name;
-	}
-	foreach($json_response->message->body->track_list as $track) {
-		echo $track->track->track_name;
-	}*/
-	
 	
 	$songs = array();
 	$artist_arr = array();
+	
+	$api_main_url = "http://api.musixmatch.com/ws/1.1/";
+	$api_key = "902908a8c199f254a1b29d864f9398a4";
+	
+	//url to request song titles and lyrics
+	$url_song_titles = $api_main_url."track.search?format=json&q_artist=" . $artist . "&quorum_factor=1&apikey=".$api_key."&page_size=30";
+	$url_lyrics = $api_main_url."track.lyrics.get?format=json&apikey=".$api_key."&track_id=";
+	
+	//obtaining decoded JSON format
+	$response = file_get_contents($url_song_titles);
+	$json_response = json_decode($response, true);
 
-	
 	$artist_arr["name"] = $artist;
-	//array_push($artist_arr, array("name", $artist));
 	
+	//going through each song titles to request lyrics
 	foreach($json_response['message']['body']['track_list'] as $track) {
+		//track_id needed to search for lyrics
 		$track_id = $track['track']['track_id'];
 		
 		$lyrics_response = file_get_contents($url_lyrics.$track_id);
 		$lyrics_response_decoded = json_decode($lyrics_response, true);
 		
+		//obtaining lyrics from JSON format
 		$lyrics_raw = $lyrics_response_decoded['message']['body']['lyrics']['lyrics_body'];
 		$lyrics_trimmed = substr($lyrics_raw,0,strpos($lyrics_raw, '*******'));
 		
-		$title = $track['track']['track_name'];
-		$lyrics = $lyrics_trimmed;
+		$title_final = $track['track']['track_name'];
+		$lyrics_final = $lyrics_trimmed;
 		
-		$song_lyrics = array();
-		$song_lyrics["title"] = $title;
-		$song_lyrics["lyrics"] = $lyrics;
+		//creating an array element that contains song title and lyrics
+		$song_lyrics_element = array();
+		$song_lyrics_element["title"] = $title_final;
+		$song_lyrics_element["lyrics"] = $lyrics_final;
 		
-		//array_push($songs, array("title", $title));
-		//array_push($songs, array("lyrics", $lyrics));
-		array_push($songs, $song_lyrics);
-		
-		//songs += ["songs" => ("title" => $title, "lyrics" => $lyrics)];
-	
-		
+		array_push($songs, $song_lyrics_element);
 	}
 	
 	$artist_arr["songs"] = $songs;
-	//array_push($artist_arr, array("songs", $songs));
 	
+	//encoding the array structure into JSON format
 	echo json_encode($artist_arr);
-	//echo json_encode($artist_arr);
-	
-	//$artist_data = array();
-	//$songs = array();
-	
-	//foreach($song_names
-	
-	/*for ($i = 0; $i < count($song_names); $i++) {
-		//echo $song_names[$i]."<br>";
-		//echo $song_lyrics[$i]."<br><br>";
-	}*/
-	
-	//var_dump($json_response['message']['body']['track_list']);
-	
 ?>
