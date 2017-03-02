@@ -58,10 +58,10 @@
 	
 	//foreach($song_names
 	
-	for ($i = 0; $i < count($song_names); $i++) {
+	/*for ($i = 0; $i < count($song_names); $i++) {
 		//echo $song_names[$i]."<br>";
 		//echo $song_lyrics[$i]."<br><br>";
-	}
+	}*/
 	
 	//var_dump($json_response['message']['body']['track_list']);
 	
