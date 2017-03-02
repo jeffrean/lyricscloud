@@ -12,7 +12,7 @@
 			<script>
 				if (typeof(Storage) !== "undefined") {
 					//establish title as word
-					var song = localStorage.getItem("songChosen"); 
+					var song = localStorage.getItem("wordChosen"); 
 					var songStop = song.indexOf(","); 
 					document.getElementById("title").innerHTML = song.slice(0, songStop); 
 					//establish header as word
