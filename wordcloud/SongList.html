@@ -5,6 +5,7 @@
 		<title id="title">Song List Title</title>
 		<link rel="stylesheet" type="text/css" href="SongListStyle.css"> 
 		<script type="text/javascript" src="jquery-3.1.1.js"></script>
+		<script type="text/javascript" src="wordfreq.js"></script>
 	</head>
 	<body>
 		<h1 id="header"> hi
@@ -29,15 +30,38 @@
 			<script> 
 				$(function(){
 				   $('li').click(function(){
-				   	  localStorage.setItem("titleChosen", $(this).text()); 
+					  var song_title_clicked = $(this).text();
+				   	  localStorage.setItem("titleChosen", song_title_clicked.substring(0, song_title_clicked.lastIndexOf(" "))); 
 				   	  window.location = "SongLyrics.html";
 				   });
 				});
 				var arr = ["list (9)", "items", "here"];
+				var word = localStorage.getItem("wordChosen");
+				word = word.slice(0,stopSpot);
+				var songs = [];
+				var artist = JSON.parse(localStorage.getItem("lyrics"));
+				for(var i = 0; i < artist.songs.length; i++)
+				{
+					var lyrics = artist.songs[i].lyrics + ' ';
+					var count = (lyrics.match(new RegExp(word + ' ', "ig")) || []).length;
+					if(count > 0)
+					{
+						songs.push( {song: artist.songs[i].title,
+									count: count});
+					}
+				}
+				songs.sort(function (a, b) {
+					if (a.count === b.count) {
+						return 0;
+					}
+					else {
+						return (a.count < b.count) ? 1 : -1;
+					}
+				});
 				$("#lyrics").append("<ul></ul>");
-				for(var i in arr) {
+				for(var i in songs) {
 				    var li = "<li>";
-				    $("#lyrics").append(li.concat(arr[i]))
+				    $("#lyrics").append(li.concat(songs[i].song + " " + songs[i].count))
 				}
 			</script> 
 		</div>

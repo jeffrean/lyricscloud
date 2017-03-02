@@ -14,7 +14,7 @@
 				document.getElementById("title").innerHTML = title; 
 				//establish header as word
 				var word =  localStorage.getItem("wordChosen"); 
-				var stopSpot = word.indexOf(","); 
+				var stopSpot = word.indexOf(",");
 			} else {
 			   document.getElementById("header").innerHTML = "Sorry, your browser does not support Web Storage...";
 			}
@@ -40,6 +40,17 @@
 
 			</script>
 		</div>
+		<script type="text/javascript">
+			var artists = JSON.parse(localStorage.getItem("lyrics"));
+			var title = localStorage.getItem("titleChosen");
+			for(var i = 0; i < artists.songs.length; i++)
+			{
+				if(artists.songs[i].title == title)
+				{
+					document.getElementById("lyrics").innerHTML = artists.songs[i].lyrics;
+				}
+			}
+		</script>
 		<div id="buttons">
 			<input type="button" VALUE="BackWC" onClick="history.go(-2);return true;">
 			<input type="button" VALUE="BackSL" onClick="history.go(-1);return true;">
