@@ -1,6 +1,62 @@
 body {
-	background-color: gray; 
+	background-color: gray;
 }
 canvas {
 	border: 2px solid purple;
+}
+#project-button {
+    position: absolute;
+    left: 50%;
+    top: 70%;
+    margin-top: 25px;
+    margin-left: -260px;
+		width: 110px;
+		height: auto;
+    border-width: med;
+    background-color: #8C2AF5;
+    border-color: black;
+    color: white;
+
+
+}
+
+#project-search {
+    resize: none;
+    position: absolute;
+    left: 50%;
+    top: 70%;
+    margin-top: -11px;
+    margin-left: -250px;
+    width: 400px;
+    height: 25px;
+    border-width: medium;
+    border-color: #8C2AF5;
+}
+#addTOCloud-button {
+    position: absolute;
+    left: 50%;
+    top: 70%;
+    margin-top: 25px;
+    margin-left: -110px;
+		width: 110px;
+		height: auto;
+    border-width: med;
+    background-color: #8C2AF5;
+    border-color: black;
+    color: white;
+}
+
+#shareToFacebook-button {
+    position: absolute;
+    left: 50%;
+    top: 70%;
+    margin-top: 25px;
+    margin-left: 40px;
+		width: 110px;
+		height: auto;
+    border-width: med;
+    background-color: #8C2AF5;
+    border-color: black;
+    color: white;
+
 }
