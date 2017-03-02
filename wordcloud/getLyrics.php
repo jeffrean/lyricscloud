@@ -17,7 +17,10 @@
 	
 	$songs = array();
 	$artist_arr = array();
-	array_push($artist_arr, array("name", $artist));
+
+	
+	$artist_arr["name"] = $artist;
+	//array_push($artist_arr, array("name", $artist));
 	
 	foreach($json_response['message']['body']['track_list'] as $track) {
 		$track_id = $track['track']['track_id'];
@@ -31,16 +34,26 @@
 		$title = $track['track']['track_name'];
 		$lyrics = $lyrics_trimmed;
 		
-		array_push($songs, array("title", $title));
-		array_push($songs, array("lyrics", $lyrics));
+		$song_lyrics = array();
+		$song_lyrics["title"] = $title;
+		$song_lyrics["lyrics"] = $lyrics;
+		
+		//array_push($songs, array("title", $title));
+		//array_push($songs, array("lyrics", $lyrics));
+		array_push($songs, $song_lyrics);
+		
+		//songs += ["songs" => ("title" => $title, "lyrics" => $lyrics)];
 	
+		
 	}
-	array_push($artist_arr, array("songs", $songs));
 	
+	$artist_arr["songs"] = $songs;
+	//array_push($artist_arr, array("songs", $songs));
 	
 	echo json_encode($artist_arr);
+	//echo json_encode($artist_arr);
 	
-	$artist_data = array();
+	//$artist_data = array();
 	//$songs = array();
 	
 	//foreach($song_names

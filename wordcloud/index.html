@@ -23,9 +23,10 @@
 						return request.responseText;
 				};
 				
-				var raw = readJSON('input.json');
+				var raw = readJSON('getLyrics.php?artist=adele');
 				var text = JSON.parse(raw);
 				var raw_lyrics = "";
+				console.log(text);
 				for(var i = 0; i < text.songs.length; i++)
 				{
 					raw_lyrics += ' ' + text.songs[i].lyrics;
