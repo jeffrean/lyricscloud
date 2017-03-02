@@ -4,7 +4,7 @@
 		<meta charset="UTF-8">
 		<script type="text/javascript" src="wordcloud2.js"></script>
 		<script type="text/javascript" src="wordfreq.js"></script>
-		<link rel="stylesheet" type="text/css" href="index.css"> 
+		<link rel="stylesheet" type="text/css" href="wordcloud.css"> 
 		<style>
 			#content {
 				width: 50%;
@@ -35,8 +35,9 @@
 					 if (!results[2]) return '';
 					 return decodeURIComponent(results[2].replace(/\+/g, " "));
 				}
-				
-				var raw = readJSON('getLyrics.php?artist=' + getParameterByName('artist'));
+				var artist = getParameterByName('artist');
+				artist = artist.replace(/ /g, "_");
+				var raw = readJSON('getLyrics.php?artist=' + artist);
 				var text = JSON.parse(raw);
 				var raw_lyrics = "";
 				console.log(text);
