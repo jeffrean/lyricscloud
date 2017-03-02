@@ -6,18 +6,14 @@ canvas {
 }
 #project-button {
     position: absolute;
-    left: 50%;
+    left: 27.5%;
     top: 70%;
-    margin-top: 25px;
-    margin-left: -260px;
 		width: 110px;
 		height: auto;
     border-width: med;
     background-color: #8C2AF5;
     border-color: black;
     color: white;
-
-
 }
 
 #project-search {
@@ -34,10 +30,8 @@ canvas {
 }
 #addTOCloud-button {
     position: absolute;
-    left: 50%;
-    top: 70%;
-    margin-top: 25px;
-    margin-left: -110px;
+    left: 39%;
+    top: 73.5%;
 		width: 110px;
 		height: auto;
     border-width: med;
@@ -48,10 +42,8 @@ canvas {
 
 #shareToFacebook-button {
     position: absolute;
-    left: 50%;
-    top: 70%;
-    margin-top: 25px;
-    margin-left: 40px;
+    left: 55%;
+    top: 73.5%;
 		width: 110px;
 		height: auto;
     border-width: med;
