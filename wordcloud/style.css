@@ -4,7 +4,7 @@ body {
 #project-button {
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 70%;
     margin-top: 25px;
     margin-left: -40px;
     border-width: med;
@@ -19,7 +19,7 @@ body {
     resize: none;
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 70%;
     margin-top: -11px;
     margin-left: -200px;
     width: 400px;
