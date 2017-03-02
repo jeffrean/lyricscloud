@@ -1,14 +1,5 @@
 var songList = [];
 
-function mySongCallback(json){
-  console.log('callback function');
-  parseSongs(json);
-  console.log(1);
-  console.log(songList);
-  console.log(songList.length);
-  console.log(2);
-  callGetLyrics(artist, songList);
-}
 
   function requestSongs(artist) {
     $.ajax({
@@ -23,13 +14,8 @@ function mySongCallback(json){
       dataType: 'jsonp' ,
       jsonp: 'callback',
       success: function (json){
-        console.log('callback function');
         parseSongs(json);
-        console.log(1);
-        console.log(songList);
-        console.log(songList.length);
-        console.log(2);
-        callGetLyrics(artist, songList);
+        getLyricsList(artist, songList);
       },
     });
 

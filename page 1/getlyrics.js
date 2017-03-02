@@ -12,15 +12,9 @@ var lyrics = [];
       dataType: 'jsonp' ,
       jsonp: 'callback',
       success: function (json){
-        console.log('callback function');
-        console.log(3);
-        console.log(json);
-        console.log(4);
         parseLyrics(json,currentSong);
-        console.log(33);
-        console.log(lyrics);
-        console.log(lyrics.length);
-        console.log(44);
+        callGetLyrics(artist, lyrics);
+
       },
     });
 
