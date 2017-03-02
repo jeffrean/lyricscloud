@@ -7,7 +7,6 @@
 		<link rel="stylesheet" type="text/css" href="wordcloud.css"> 
 		<style>
 			#content {
-				top: 30%;
 				width: 50%;
 				margin: 0 auto;
 			}
@@ -37,14 +36,11 @@
 					 return decodeURIComponent(results[2].replace(/\+/g, " "));
 				}
 				var artist = getParameterByName('artist');
-				if(artist==null)
-				{
-					artist = localStorage.getItem("artist");
-				}
 				artist = artist.replace(/ /g, "_");
 				var raw = readJSON('getLyrics.php?artist=' + artist);
 				var text = JSON.parse(raw);
 				var raw_lyrics = "";
+				console.log(text);
 				for(var i = 0; i < text.songs.length; i++)
 				{
 					raw_lyrics += ' ' + text.songs[i].lyrics;
@@ -69,6 +65,7 @@
 						minRotation: 0,
 						drawOutOfBound: true,
 						click: function(item, dimension, event) {
+							console.log(item);
 							localStorage.setItem("wordChosen", item);
 							window.location = "SongList.html"; 
 						}

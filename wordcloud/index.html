@@ -136,11 +136,7 @@ function callGetSongList() {
     } else {
         alert("Please enter a valid artist name!");
     }*/
-    //window.location.href = "wordcloud.html?artist=" + artist;
-   localStorage.setItem("artist", artist);
-	$(function(){
-		$("#wordcloud").load("wordcloud.html");
-	});
+    window.location.href = "wordcloud.html?artist=" + artist;
 }
 
   </script>
