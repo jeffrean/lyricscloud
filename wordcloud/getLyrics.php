@@ -79,10 +79,9 @@
 	$artist = $_GET["artist"];
 	
 	$api_main_url = "http://api.musixmatch.com/ws/1.1/";
-	$api_key = "7715b02c13eabfd0757751cff37665a2";
+	//$api_key = "7715b02c13eabfd0757751cff37665a2";
 	//$api_key = "902908a8c199f254a1b29d864f9398a4";
 	$api_key = "83149e0ddfd90f54291c06d42808d653";
-
 
 	//url to request song titles and lyrics
 	$url_song_titles = $api_main_url."track.search?format=json&q_artist=" . $artist . "&quorum_factor=1&apikey=".$api_key."&page_size=30";

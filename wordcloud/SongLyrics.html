@@ -42,7 +42,16 @@
 					{
 						//document.getElementById("lyrics").innerHTML = artists.songs[i].lyrics;
 						var lyricsString = artist.songs[j].lyrics;
-						var lyricsSplitArray = lyricsString.split(" ");
+						var lyricsSplitArray = lyricsString.split(/\r?\n/); //split by endline
+
+						var fullLyricsSplitArray = [];
+						for (var q = 0; q < lyricsSplitArray.length; q++) {
+							var splitSubString = lyricsSplitArray[q];
+							var spaceSplitSubstringArray = splitSubString.split(" ");
+							fullLyricsSplitArray = fullLyricsSplitArray.concat(spaceSplitSubstringArray);
+						}
+
+						lyricsSplitArray = fullLyricsSplitArray;
 					
 						// for each word, check if we need to highlight
 						for (var q = 0; q < lyricsSplitArray.length; q++) {
