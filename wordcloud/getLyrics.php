@@ -68,7 +68,7 @@
 		return $songs;
 	}
 	
-	function createMasterArray($songs, $arist) {
+	function createMasterArray($songs, $artist) {
 		$artist_arr = array();
 		$artist_arr["name"] = $artist;
 		$artist_arr["songs"] = $songs;
