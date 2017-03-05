@@ -42,7 +42,7 @@
 					{
 						//document.getElementById("lyrics").innerHTML = artists.songs[i].lyrics;
 						var lyricsString = artist.songs[j].lyrics;
-						var lyricsSplitArray = lyricsString.split(/\r?\n/); //split by endline
+						var lyricsSplitArray = lyricsString.split(/,?\s+/); //split by endline
 
 						var fullLyricsSplitArray = [];
 						for (var q = 0; q < lyricsSplitArray.length; q++) {
@@ -52,6 +52,7 @@
 						}
 
 						lyricsSplitArray = fullLyricsSplitArray;
+						console.log(lyricsSplitArray);
 					
 						// for each word, check if we need to highlight
 						for (var q = 0; q < lyricsSplitArray.length; q++) {
