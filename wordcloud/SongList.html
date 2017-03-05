@@ -53,6 +53,9 @@
 				{
 					var artist_lyrics = artist.songs[j].lyrics + ' ';
 					var count = (artist_lyrics.match(new RegExp(word + ' ', "ig")) || []).length;
+					count += (artist_lyrics.match(new RegExp(word + ',', "ig")) || []).length;
+					count += (artist_lyrics.match(new RegExp(word + '\n', "ig")) || []).length;
+					count += (artist_lyrics.match(new RegExp(word + '\r', "ig")) || []).length;
 					if(count > 0)
 					{
 						songs.push( {song: artist.songs[j].title,
