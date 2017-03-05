@@ -92,7 +92,7 @@
 	$track_names = createTrackNameArray($json_response);
 	$lyrics_arr = createLyricsArray($track_ids, $url_lyrics);
 	$songs = createTitleLyricsArray($track_names, $lyrics_arr);
-	$artist_arr = createMasterArray($songs, $arist);
+	$artist_arr = createMasterArray($songs, $artist);
 
 	echo json_encode($artist_arr);
 
