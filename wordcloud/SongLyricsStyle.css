@@ -20,5 +20,10 @@ h1 {
 	margin-right: auto; 
 	margin-left: auto; 
 	width: 120px;  
-	color: purple; 
+}
+#button {
+	border-width: med;
+    background-color: #8C2AF5;
+    border-color: black;
+    color: white;
 }

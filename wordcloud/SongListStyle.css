@@ -22,3 +22,9 @@ h1 {
 	margin-left: auto; 
 	width: 120px; 
 }
+#button {
+	border-width: med;
+    background-color: #8C2AF5;
+    border-color: black;
+    color: white;
+}
