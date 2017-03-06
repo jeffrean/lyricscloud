@@ -56,11 +56,11 @@
 					var artistsList = localStorage.getItem("artistList");
 					var artistNew = document.getElementById("project-search").value;
 
-					//if (containsArtist(artists, artistNew) && contains(artistsList.split(','), artistNew) === false) {
+					if (containsArtist(artists, artistNew) && contains(artistsList.split(','), artistNew) === false) {
 						window.location.href = "wordcloud.html?artists=" + artistsList + ',' + artistNew;
-			   /* } else {
+			    } else {
 			        alert("Please enter a valid artist name!");
-			    }*/
+			    }
 				}
 				function readJSON(file) {
 					var request = new XMLHttpRequest();
