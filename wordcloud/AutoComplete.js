@@ -115,3 +115,8 @@ function callGetSongList() {
         alert("Please enter a valid artist name!");
     }*/
 }
+
+function refresh() {
+    search(document.getElementById("project-search").value);
+    //document.getElementById("project-search").autocomplete({ source: artists });
+}
