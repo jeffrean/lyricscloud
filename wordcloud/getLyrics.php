@@ -34,20 +34,37 @@
 	
 	function createLyricsArray($track_ids, $url_lyrics) {
 		$lyrics_arr = array();
+		$curl_multi = array();
+		$mh = curl_multi_init();
 	
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_HEADER, false);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 1); 
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
 		for ($i=0; $i<count($track_ids); $i++) {
-			curl_setopt($ch, CURLOPT_URL, $url_lyrics.$track_ids[$i]);
-			$lyrics_response = curl_exec($ch);
+			$curl_multi[$i] = curl_init();
+			
+			curl_setopt($curl_multi[$i], CURLOPT_HEADER, false);
+			curl_setopt($curl_multi[$i], CURLOPT_SSL_VERIFYHOST, 1);
+			curl_setopt($curl_multi[$i], CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($curl_multi[$i], CURLOPT_URL, $url_lyrics.$track_ids[$i]);
+			
+			curl_multi_add_handle($mh, $curl_multi[$i]);
+		}
+		
+		$running = null;
+		do {
+			curl_multi_exec($mh, $running);
+			curl_multi_select($mh);
+		} while ($running > 0);
+		
+		
+		for($i=0; $i<count($track_ids); $i++) {
+			$lyrics_response = curl_multi_getcontent($curl_multi[$i]);
 			$lyrics_response_decoded = json_decode($lyrics_response, true);
 			$lyrics_raw = $lyrics_response_decoded['message']['body']['lyrics']['lyrics_body'];
 			$lyrics_trimmed = substr($lyrics_raw,0,strpos($lyrics_raw, '*******'));
 			array_push($lyrics_arr, $lyrics_trimmed);
+			curl_multi_remove_handle($mh, $curl_multi[$i]);
 		}
-		curl_close($ch);
+		
+		curl_multi_close($mh);
 		
 		return $lyrics_arr;
 	}
