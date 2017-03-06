@@ -42,6 +42,7 @@
 					{
 						//document.getElementById("lyrics").innerHTML = artists.songs[i].lyrics;
 						var lyricsString = artist.songs[j].lyrics;
+						lyricsString = lyricsString.replace(/'/gi,"");
 						var lyricsSplitArray = lyricsString.split(/,?\s+/); //split by endline
 
 						var fullLyricsSplitArray = [];
@@ -52,14 +53,13 @@
 						}
 
 						lyricsSplitArray = fullLyricsSplitArray;
-						console.log(lyricsSplitArray);
 					
 						// for each word, check if we need to highlight
 						for (var q = 0; q < lyricsSplitArray.length; q++) {
 							var trimmedWord = lyricsSplitArray[q].trim();
 							var moreTrimmedWord = word.split(",");
 							var newWord = moreTrimmedWord[0];
-							if (trimmedWord === newWord) {
+							if (trimmedWord.toUpperCase() === newWord.toUpperCase()) {
 								// highlight chosen word
 								$("#lyrics").append("<span style=background-color:#FFFF00>" + trimmedWord + "</span> "); 
 							}

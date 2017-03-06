@@ -52,10 +52,11 @@
 				for(var j = 0; j < artist.songs.length; j++)
 				{
 					var artist_lyrics = artist.songs[j].lyrics + ' ';
-					var count = (artist_lyrics.match(new RegExp(word + ' ', "ig")) || []).length;
-					count += (artist_lyrics.match(new RegExp(word + ',', "ig")) || []).length;
-					count += (artist_lyrics.match(new RegExp(word + '\n', "ig")) || []).length;
-					count += (artist_lyrics.match(new RegExp(word + '\r', "ig")) || []).length;
+					artist_lyrics = artist_lyrics.replace(/'/gi,"");
+					var count = (artist_lyrics.match(new RegExp(word + ' ', "gi")) || []).length;
+					count += (artist_lyrics.match(new RegExp(word + ',', "gi")) || []).length;
+					count += (artist_lyrics.match(new RegExp(word + '\n', "gi")) || []).length;
+					count += (artist_lyrics.match(new RegExp(word + '\r', "gi")) || []).length;
 					if(count > 0)
 					{
 						songs.push( {song: artist.songs[j].title,
