@@ -6,7 +6,8 @@
 </head>
 <body>
 	<div id="search">
-		<input id="project-search" onkeyup="refresh();">
+		<input id="project-search" onkeyup="refresh();" onkeydown = "if (event.keyCode == 13)
+                        document.getElementById('project-button').click();">
 		<button id="project-button" onclick="callGetSongList();">Search</button>
 	</div>
 	<link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
