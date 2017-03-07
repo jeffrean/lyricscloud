@@ -3,6 +3,11 @@ var artist = "";
 var artists = [];
 var access_token = "viBFW_j39QZDdkY42kwsa__gzw6ng9P5iuaLoCf9xr4VAErPIB_9P2Jm1tpFbaVG";
 
+document.addEventListener("onkeydown", function(event){
+    alert("here");
+    if (event.keyCode == 13) document.getElementById('project-button').click();
+}, false);
+
 function getUrl(artist) {
 	return 'getArtists.php?artist=' + artist + '*';
     //return 'http://api.genius.com/search?q=' + artist + "&access_token=" + access_token;
@@ -67,8 +72,12 @@ function search(artist) {
     $project.autocomplete({
         minLength: 0,
         source: function(request, response) {
-            search(request.term);
-            response(artists);
+            search(request.term.slice(0,request.term.length-1));
+            if(request.term.length >= 3){
+							response(artists);
+						}else {
+							response({});
+						}
         },
         focus: function(event, ui) {
             $project.val(ui.item.name);
@@ -109,14 +118,16 @@ function callGetLyrics(artist, lyricsList){
 
 function callGetSongList() {
 	artist = document.getElementById("project-search").value;
-    //if (containsArtist(artists, artist)) {
+    if (containsArtist(artists, artist)) {
 			window.location.href = "wordcloud.html?artists=" + artist;
-    /*} else {
+    } else {
         alert("Please enter a valid artist name!");
-    }*/
+    }
 }
 
 function refresh() {
     search(document.getElementById("project-search").value);
     //document.getElementById("project-search").autocomplete({ source: artists });
 }
+
+
