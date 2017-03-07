@@ -3,6 +3,11 @@ var artist = "";
 var artists = [];
 var access_token = "viBFW_j39QZDdkY42kwsa__gzw6ng9P5iuaLoCf9xr4VAErPIB_9P2Jm1tpFbaVG";
 
+document.addEventListener("onkeydown", function(event){
+    alert("here");
+    if (event.keyCode == 13) document.getElementById('project-button').click();
+}, false);
+
 function getUrl(artist) {
 	return 'getArtists.php?artist=' + artist + '*';
     //return 'http://api.genius.com/search?q=' + artist + "&access_token=" + access_token;
@@ -124,3 +129,5 @@ function refresh() {
     search(document.getElementById("project-search").value);
     //document.getElementById("project-search").autocomplete({ source: artists });
 }
+
+
