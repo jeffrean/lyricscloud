@@ -1,7 +1,9 @@
 {
     "require-dev": {
         "behat/behat": "~2.5",
-        "behat/mink-selenium2-driver": "1.3.1"
+        "behat/mink-selenium2-driver": "1.3.1",
+        "behat/mink-selenium-driver" : "*",
+        "facebook/webdriver": "*"
     },
     "config": {
         "bin-dir": "bin/"

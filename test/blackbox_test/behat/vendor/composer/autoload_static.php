@@ -16,9 +16,11 @@ class ComposerStaticInit76bf9e16441f39383ce8e678f0324b00
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Component\\Yaml\\' => 23,
             'Symfony\\Component\\Translation\\' => 30,
+            'Symfony\\Component\\Process\\' => 26,
             'Symfony\\Component\\Finder\\' => 25,
             'Symfony\\Component\\Filesystem\\' => 29,
             'Symfony\\Component\\EventDispatcher\\' => 34,
+            'Symfony\\Component\\DomCrawler\\' => 29,
             'Symfony\\Component\\DependencyInjection\\' => 38,
             'Symfony\\Component\\Debug\\' => 24,
             'Symfony\\Component\\CssSelector\\' => 30,
@@ -28,6 +30,10 @@ class ComposerStaticInit76bf9e16441f39383ce8e678f0324b00
         'P' => 
         array (
             'Psr\\Log\\' => 8,
+        ),
+        'F' => 
+        array (
+            'Facebook\\WebDriver\\' => 19,
         ),
         'B' => 
         array (
@@ -49,6 +55,10 @@ class ComposerStaticInit76bf9e16441f39383ce8e678f0324b00
         array (
             0 => __DIR__ . '/..' . '/symfony/translation',
         ),
+        'Symfony\\Component\\Process\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/process',
+        ),
         'Symfony\\Component\\Finder\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/finder',
@@ -60,6 +70,10 @@ class ComposerStaticInit76bf9e16441f39383ce8e678f0324b00
         'Symfony\\Component\\EventDispatcher\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/event-dispatcher',
+        ),
+        'Symfony\\Component\\DomCrawler\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/dom-crawler',
         ),
         'Symfony\\Component\\DependencyInjection\\' => 
         array (
@@ -85,9 +99,14 @@ class ComposerStaticInit76bf9e16441f39383ce8e678f0324b00
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
         ),
+        'Facebook\\WebDriver\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/facebook/webdriver/lib',
+        ),
         'Behat\\Mink\\Driver\\' => 
         array (
             0 => __DIR__ . '/..' . '/behat/mink-selenium2-driver/src',
+            1 => __DIR__ . '/..' . '/behat/mink-selenium-driver/src',
         ),
         'Behat\\Mink\\' => 
         array (
@@ -101,6 +120,13 @@ class ComposerStaticInit76bf9e16441f39383ce8e678f0324b00
             'WebDriver' => 
             array (
                 0 => __DIR__ . '/..' . '/instaclick/php-webdriver/lib',
+            ),
+        ),
+        'S' => 
+        array (
+            'Selenium' => 
+            array (
+                0 => __DIR__ . '/..' . '/alexandresalome/php-selenium/src',
             ),
         ),
         'B' => 
