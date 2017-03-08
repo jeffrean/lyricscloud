@@ -110,16 +110,8 @@
 		  	QUnit.test("requestArtistsTest", function( assert ) {
 		  		var baseUrl = "http://localhost:8000/getArtists.php?artist=";
 		  		assert.equal(typeof requestArtists(baseUrl + "Adele*"), "string");
-		  		var bool;
-		  		try {
-   					//throw 'myException'; // generates an exception
-				}
-				catch (e) {
-   					// statements to handle any exceptions
-   					//logMyErrors(e); // pass exception object to error handler
-				}
-		  		assert.equal(requestArtists(null), null);
-		  		asser.equal(requestArtists(baseUrl))
+		  		assert.equal(requestArtists(null), "");
+		  		assert.equal(requestArtists(baseUrl),"");
 		  	});
     	</script>
 	</body>
