@@ -14,7 +14,13 @@
     	<div id="qunit-fixture"></div>
     	<script src="https://code.jquery.com/qunit/qunit-2.1.1.js"></script>
     	<script>
-    		//program pulls title from 
+
+    		//BEGIN SONGLYRICS.JS TESTS
+
+    		/*
+		  	*tests findSongTitle() function in SongLyrics.js
+		  	*
+		  	*/
     		/*QUnit.test("findSongTitleTest", function( assert ) {
 			    function titleTest(title) {
 			      assert.equal(findSongTitleTest(artists),
@@ -22,6 +28,10 @@
 			    }
 			    titleTest("Hello");
 		  	});*/
+			/*
+		  	*tests checkHighlight(lyricsSplitArrat) function in SongLyrics.js
+		  	*
+		  	*/
 		  	QUnit.test("checkHighlightTest", function( assert ) {
 	    		function highlightTest(lyricsSplitArray, word, expectedCount) {
 	    			assert.equal(checkHighlightTest(lyricsSplitArray, word), expectedCount); 
@@ -35,6 +45,10 @@
 			    highlightTest(["no","no","no"], "hello",0);
 			    highlightTest(null, null,0);
 		  	});
+		  	/*
+		  	*tests createLyricsSplitArray(lyricsString) function in SongLyrics.js
+		  	*
+		  	*/
 		  	QUnit.test("createLyricsSplitArrayTest", function( assert ) {
 			    function arrayTest(testString, expected) {
 			    	assert.equal(createLyricsSplitArray(testString).length, expected); 
