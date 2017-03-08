@@ -17,17 +17,6 @@
 
     		//BEGIN SONGLYRICS.JS TESTS
 
-    		/*
-		  	*tests findSongTitle() function in SongLyrics.js
-		  	*
-		  	*/
-    		/*QUnit.test("findSongTitleTest", function( assert ) {
-			    function titleTest(title) {
-			      assert.equal(findSongTitleTest(artists),
-			        title);
-			    }
-			    titleTest("Hello");
-		  	});*/
 			/*
 		  	*tests checkHighlight(lyricsSplitArrat) function in SongLyrics.js
 		  	*
@@ -44,6 +33,46 @@
 			    highlightTest(["Hello", "yo"], "HELLO",1); 
 			    highlightTest(["no","no","no"], "hello",0);
 			    highlightTest(null, null,0);
+		  	});
+		  	/*
+		  	*tests createLyricsSplitArray(lyricsString) function in SongLyrics.js
+		  	*
+		  	*/
+		  	QUnit.test("createLyricsSplitArrayTest", function( assert ) {
+			    function arrayTest(testString, expected) {
+			    	assert.equal(createLyricsSplitArray(testString).length, expected); 
+			    }
+			    arrayTest("Hello My Name Is Taylor", 5);
+			    arrayTest("Hey ",2);
+			    arrayTest("  ",2);
+			    arrayTest("My",1);
+			    arrayTest("Spilt TestTest",2);
+		  	});
+
+		  	//BEGIN SONGLIST.JS TESTS
+		  	/*
+		  	*tests createLyricsSplitArray(lyricsString) function in SongLyrics.js
+		  	*
+		  	*/
+		  	QUnit.test("createLyricsSplitArrayTest", function( assert ) {
+			    function sortSongsTest(testString, expected) {
+			    	assert.equal(sortSongs(testString), expected); 
+			    }
+			    sortSongsTest(); 
+		  	});
+		  	/*
+		  	*tests createLyricsSplitArray(lyricsString) function in SongLyrics.js
+		  	*
+		  	*/
+		  	QUnit.test("createLyricsSplitArrayTest", function( assert ) {
+			    function arrayTest(testString, expected) {
+			    	assert.equal(createLyricsSplitArray(testString).length, expected); 
+			    }
+			    arrayTest("Hello My Name Is Taylor", 5);
+			    arrayTest("Hey ",2);
+			    arrayTest("  ",2);
+			    arrayTest("My",1);
+			    arrayTest("Spilt TestTest",2);
 		  	});
 		  	/*
 		  	*tests createLyricsSplitArray(lyricsString) function in SongLyrics.js
@@ -80,7 +109,7 @@
 		  	*/
 		  	QUnit.test("requestArtistsTest", function( assert ) {
 		  		var baseUrl = "http://localhost:8000/getArtists.php?artist=";
-		  		assert.equals(typeof requestArtists(baseUrl + "Adele*"), "string");
+		  		assert.equal(typeof requestArtists(baseUrl + "Adele*"), "string");
 		  		var bool;
 		  		try {
    					//throw 'myException'; // generates an exception
@@ -89,8 +118,8 @@
    					// statements to handle any exceptions
    					//logMyErrors(e); // pass exception object to error handler
 				}
-		  		assert.equals(requestArtists(null), null);
-		  		asser.equals(requestArtists(baseUrl))
+		  		assert.equal(requestArtists(null), null);
+		  		asser.equal(requestArtists(baseUrl))
 		  	});
     	</script>
 	</body>
