@@ -37,11 +37,14 @@ function checkHighlight(lyricsSplitArray) {
 //tests checkHighlight by count instead of adding to #lyrics
 function checkHighlightTest(lyricsSplitArray, word) {
 	// for each word, check if we need to highlight
+	var count = 0; 
 	for (var q = 0; q < lyricsSplitArray.length; q++) {
-		var count = 0; 
 		var trimmedWord = lyricsSplitArray[q].trim();
+		word = word.trim();
+		console.log(trimmedWord.toUpperCase(), " ", word.toUpperCase());
 		if (trimmedWord.toUpperCase() === word.toUpperCase()) {
 			// highlight chosen word, so add count of picked by 1
+			console.log("yea");
 			count++;
 		}
 	}
@@ -56,7 +59,6 @@ function createLyricsSplitArray(lyricsString) {
 	var fullLyricsSplitArray = [];
 	for (var q = 0; q < lyricsSplitArray.length; q++) {
 		var splitSubString = lyricsSplitArray[q];
-		console.log(lyricsSplitArray[q]);
 		var spaceSplitSubstringArray = splitSubString.split(" ");
 		fullLyricsSplitArray = fullLyricsSplitArray.concat(spaceSplitSubstringArray);
 	}

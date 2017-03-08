@@ -23,9 +23,17 @@
 			    titleTest("Hello");
 		  	});*/
 		  	QUnit.test("checkHighlightTest", function( assert ) {
-	    		function highlightTest() {
-
+	    		function highlightTest(lyricsSplitArray, word, expectedCount) {
+	    			assert.equal(checkHighlightTest(lyricsSplitArray, word), expectedCount); 
 			    }
+			    highlightTest(["Hello"], "hello",1);
+			    highlightTest(["Hello", "yo", "hey"], "hello",1);
+			    highlightTest([], "hello",0);
+			    highlightTest(["HELLO", "yo"], "hello",1);
+			    highlightTest(["hello"], "hello",1);
+			    highlightTest(["Hello", "yo"], "HELLO",1); 
+			    highlightTest(["no","no","no"], "hello",0);
+			    highlightTest(null, null,0);
 		  	});
 		  	QUnit.test("createLyricsSplitArrayTest", function( assert ) {
 			    function arrayTest(testString, expected) {
