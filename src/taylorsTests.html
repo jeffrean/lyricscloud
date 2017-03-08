@@ -6,6 +6,7 @@
 		<link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.1.1.css">
 
   		<script type="text/javascript" src="SongLyrics.js"></script>
+  		<script type="text/javascript" src="AutoComplete.js"></script>
 
 	</head>
 	<body>
@@ -35,6 +36,39 @@
 			    arrayTest("  ",2);
 			    arrayTest("My",1);
 			    arrayTest("Spilt TestTest",2);
+		  	});
+
+		  	//BEGIN AUTOCOMPLETE.JS TESTS
+
+		  	/*
+		  	*tests getUrl(artist) function in AutoComplete.js
+		  	*
+		  	*/
+		  	QUnit.test("getUrlTest", function( assert ) {
+		  		assert.equal(getUrl("Adele"), "getArtists.php?artist=Adele*");
+		  		assert.equal(getUrl("'"), "getArtists.php?artist='*");
+		  		assert.equal(getUrl(123), "getArtists.php?artist=123*");
+		  		assert.equal(getUrl(undefined), undefined);
+		  		assert.equal(getUrl(null), null);
+		  	});
+
+		  	/*
+		  	*tests requestArtists(url)
+		  	*server must be active
+		  	*/
+		  	QUnit.test("requestArtistsTest", function( assert ) {
+		  		var baseUrl = "http://localhost:8000/getArtists.php?artist=";
+		  		assert.equals(typeof requestArtists(baseUrl + "Adele*"), "string");
+		  		var bool;
+		  		try {
+   					//throw 'myException'; // generates an exception
+				}
+				catch (e) {
+   					// statements to handle any exceptions
+   					//logMyErrors(e); // pass exception object to error handler
+				}
+		  		assert.equals(requestArtists(null), null);
+		  		asser.equals(requestArtists(baseUrl))
 		  	});
     	</script>
 	</body>

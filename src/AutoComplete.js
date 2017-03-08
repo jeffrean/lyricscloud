@@ -23,7 +23,6 @@ function requestArtists(url) {
     xhr.open('GET', url, true);
     xhr.setRequestHeader("Accept", "");
     xhr.send(null);
-
 }
 
 //returns true if elem -> items (false otherwise)
