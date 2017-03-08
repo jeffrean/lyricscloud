@@ -34,6 +34,20 @@ function checkHighlight(lyricsSplitArray) {
 	}
 }
 
+//tests checkHighlight by count instead of adding to #lyrics
+function checkHighlightTest(lyricsSplitArray, word) {
+	// for each word, check if we need to highlight
+	for (var q = 0; q < lyricsSplitArray.length; q++) {
+		var count = 0; 
+		var trimmedWord = lyricsSplitArray[q].trim();
+		if (trimmedWord.toUpperCase() === word.toUpperCase()) {
+			// highlight chosen word, so add count of picked by 1
+			count++;
+		}
+	}
+	return count; 
+}
+
 //splits lyrics into individual words to create displayed lyrics to client
 function createLyricsSplitArray(lyricsString) {
 	lyricsString = lyricsString.replace(/'/gi,"");
