@@ -58,12 +58,7 @@
 		  	QUnit.test("sortSongsTest", function( assert ) {
 			    function sortSongsTest(songs, expected) {
 			    	sortSongs(songs); 
-			    	assert.equal(songs.length, expected.length); 
-			    	if (songs.length == expected.length) {
-				    	for (var i=0; i<songs.length; i++) {
-				    		assert.equal(songs[i].count, expected[i].count);
-				    	}
-				    }	
+			    	assert.deepEqual(songs, expected);
 			    }
 			    //expected added in order its supposed to be, songs cleared and remade before each test
 			    var songs = [];
@@ -120,6 +115,7 @@
 				countTest(" ", "hello",0); 
 				countTest("HelloHelloHello", "hello", 0);
 				countTest("","",0);
+				countTest(null,null,0);
 		  	})
 
 		  	//BEGIN AUTOCOMPLETE.JS TESTS
