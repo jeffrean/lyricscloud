@@ -32,6 +32,10 @@ class FeatureContext extends BehatContext
 		{
 			return "header";
 		}
+		if(strcmp($name, "word_cloud") == 0)
+		{
+			return "my_canvas";
+		}
 	}
 
 	public function __construct()
@@ -42,8 +46,8 @@ class FeatureContext extends BehatContext
 	}
 
 	/**
-	 * @Given /^I am on "([^"]*)"$/
-	 */
+	* @Given /^I am on "([^"]*)"$/
+	*/
 	public function iAmOn($arg1)
 	{
 		$this->driver->get($arg1);
@@ -52,8 +56,8 @@ class FeatureContext extends BehatContext
 	}
 
 	/**
-	 * @Given /^the "([^"]*)" is empty$/
-	 */
+	* @Given /^the "([^"]*)" is empty$/
+	*/
 	public function theIsEmpty($arg1)
 	{
 		$id_name = $this->name_translation($arg1);
@@ -67,8 +71,8 @@ class FeatureContext extends BehatContext
 	}
 
 	/**
-	 * @Then /^the "([^"]*)" should not be clickable$/
-	 */
+	* @Then /^the "([^"]*)" should not be clickable$/
+	*/
 	public function theShouldNotBeClickable($arg1)
 	{
 		$url = $this->driver->getCurrentUrl();
@@ -83,8 +87,8 @@ class FeatureContext extends BehatContext
 	}
 
 	/**
-	 * @When /^I type "([^"]*)" into the "([^"]*)"$/
-	 */
+	* @When /^I type "([^"]*)" into the "([^"]*)"$/
+	*/
 	public function iTypeIntoThe($arg1, $arg2)
 	{
 		$id_name = $this->name_translation($arg2);
@@ -93,12 +97,12 @@ class FeatureContext extends BehatContext
 		);
 		$textbox->sendKeys($arg1);
 		/*if(strcmp($textbox->getText(), $arg1) != 0)
-			throw new PendingException();*/
+		throw new PendingException();*/
 	}
 
 	/**
-	 * @Then /^the "([^"]*)" should be clickable$/
-	 */
+	* @Then /^the "([^"]*)" should be clickable$/
+	*/
 	public function theShouldBeClickable($arg1)
 	{
 		$id_name = $this->name_translation($arg1);
@@ -109,8 +113,8 @@ class FeatureContext extends BehatContext
 	}
 
 	/**
-	 * @Given /^click "([^"]*)"$/
-	 */
+	* @Given /^click "([^"]*)"$/
+	*/
 	public function click($arg1)
 	{
 		//$url = $this->driver->getCurrentUrl();
@@ -122,8 +126,8 @@ class FeatureContext extends BehatContext
 	}
 
 	/**
-	 * @Then /^the "([^"]*)" should be "([^"]*)"$/
-	 */
+	* @Then /^the "([^"]*)" should be "([^"]*)"$/
+	*/
 	public function theShouldBe($arg1, $arg2)
 	{
 		$id_name = $this->name_translation($arg1);
@@ -135,27 +139,27 @@ class FeatureContext extends BehatContext
 	}
 
 	/**
-	 * @Then /^the "([^"]*)" should be updated$/
-	 */
+	* @Then /^the "([^"]*)" should be updated$/
+	*/
 	public function theShouldBeUpdated($arg1)
 	{
-		//throw new PendingException();
+		throw new PendingException();
 	}
 
 	/**
-	 * @Then /^"([^"]*)" should be empty$/
-	 */
+	* @Then /^"([^"]*)" should be empty$/
+	*/
 	public function shouldBeEmpty($arg1)
 	{
-		//throw new PendingException();
+		throw new PendingException();
 	}
 
 	/**
-	 * @Then /^"([^"]*)" should be ediable$/
-	 */
+	* @Then /^"([^"]*)" should be ediable$/
+	*/
 	public function shouldBeEdiable($arg1)
 	{
-		//throw new PendingException();
+		throw new PendingException();
 	}
 
 	/**
@@ -171,7 +175,7 @@ class FeatureContext extends BehatContext
 	*/
 	public function theSuggestionsShouldNotBeVisable()
 	{
-	throw new PendingException();
+		throw new PendingException();
 	}
 
 	/**
@@ -179,7 +183,7 @@ class FeatureContext extends BehatContext
 	*/
 	public function theSuggestionsShouldBeVisable()
 	{
-	throw new PendingException();
+		throw new PendingException();
 	}
 
 	/**
@@ -187,7 +191,7 @@ class FeatureContext extends BehatContext
 	*/
 	public function iHaveSuggestions()
 	{
-	throw new PendingException();
+		throw new PendingException();
 	}
 
 	/**
@@ -195,7 +199,7 @@ class FeatureContext extends BehatContext
 	*/
 	public function thereShouldBeAtLeastThreeSuggestions()
 	{
-	throw new PendingException();
+		throw new PendingException();
 	}
 
 	/**
@@ -203,7 +207,7 @@ class FeatureContext extends BehatContext
 	*/
 	public function thereShouldBeANameAndImageForEachArtist()
 	{
-	throw new PendingException();
+		throw new PendingException();
 	}
 
 	/**
@@ -211,7 +215,7 @@ class FeatureContext extends BehatContext
 	*/
 	public function iClickOnASuggestion()
 	{
-	throw new PendingException();
+		throw new PendingException();
 	}
 
 	/**
@@ -219,7 +223,7 @@ class FeatureContext extends BehatContext
 	*/
 	public function theShouldBeUpdatedToTheArtistIClicked($arg1)
 	{
-	throw new PendingException();
+		throw new PendingException();
 	}
 
 	/**
@@ -227,7 +231,7 @@ class FeatureContext extends BehatContext
 	*/
 	public function thereShouldBeA($arg1)
 	{
-	throw new PendingException();
+		throw new PendingException();
 	}
 
 	/**
@@ -235,7 +239,15 @@ class FeatureContext extends BehatContext
 	*/
 	public function iHaveAnArtistOnThe($arg1)
 	{
-	throw new PendingException();
+		$id_name = $this->name_translation($arg1);
+		$textfield = $this->driver->findElement(
+			WebDriverBy::id($id_name)
+		);
+		$textfield()->sendKeys("Adele");
+		if(strlen($textfield->getText()) == 0)
+		{
+			throw new PendingException();
+		}
 	}
 
 	/**
@@ -243,7 +255,7 @@ class FeatureContext extends BehatContext
 	*/
 	public function iClickThe($arg1)
 	{
-	throw new PendingException();
+		throw new PendingException();
 	}
 
 	/**
@@ -251,7 +263,7 @@ class FeatureContext extends BehatContext
 	*/
 	public function iShouldBeOnThe($arg1)
 	{
-	throw new PendingException();
+		throw new PendingException();
 	}
 
 	/**
@@ -259,7 +271,7 @@ class FeatureContext extends BehatContext
 	*/
 	public function iAmOnThe($arg1)
 	{
-	throw new PendingException();
+		throw new PendingException();
 	}
 
 	/**
@@ -267,8 +279,7 @@ class FeatureContext extends BehatContext
 	*/
 	public function theTitleShouldBeThe($arg1)
 	{
-		$title = $arg1
-	throw new PendingException();
+		throw new PendingException();
 	}
 
 	/**
@@ -276,7 +287,7 @@ class FeatureContext extends BehatContext
 	*/
 	public function iHaveA($arg1)
 	{
-	throw new PendingException();
+		throw new PendingException();
 	}
 
 	/**
@@ -284,7 +295,7 @@ class FeatureContext extends BehatContext
 	*/
 	public function iClickOnThe($arg1)
 	{
-	throw new PendingException();
+		throw new PendingException();
 	}
 
 	/**
@@ -292,7 +303,7 @@ class FeatureContext extends BehatContext
 	*/
 	public function iShouldBeRedirectedTo($arg1)
 	{
-	throw new PendingException();
+		throw new PendingException();
 	}
 
 	/**
@@ -300,7 +311,7 @@ class FeatureContext extends BehatContext
 	*/
 	public function iShareOnFacebook()
 	{
-	throw new PendingException();
+		throw new PendingException();
 	}
 
 	/**
@@ -308,7 +319,7 @@ class FeatureContext extends BehatContext
 	*/
 	public function thePostShouldHaveAnImageAndTheListOfArtists()
 	{
-	throw new PendingException();
+		throw new PendingException();
 	}
 
 	/**
@@ -316,7 +327,7 @@ class FeatureContext extends BehatContext
 	*/
 	public function iAmNotLoggedIn()
 	{
-	throw new PendingException();
+		throw new PendingException();
 	}
 
 	/**
@@ -324,30 +335,83 @@ class FeatureContext extends BehatContext
 	*/
 	public function facebookShouldAskMeToLogIn()
 	{
-	throw new PendingException();
+		throw new PendingException();
 	}
 
 	/**
-	* @Then /^the "([^"]*)" should have the most freqently used words$/
+	* @Given /^I have an artist$/
 	*/
-	public function theShouldHaveTheMostFreqentlyUsedWords($arg1)
+	public function iHaveAnArtist()
 	{
-	throw new PendingException();
+		$this->driver->get("http://localhost:8000/wordcloud.html?artists=Adele");
+		$id_name = $this->name_translation($arg1);
+		$word_cloud = $this->driver->findElement(
+			WebDriverBy::id($id_name)
+		);
+		if($word_cloud->isDisplayed() == false)
+			throw new PendingException();
+	}
+
+	/**
+	* @Then /^the song list should be sorted$/
+	*/
+	public function theSongListShouldBeSorted()
+	{
+		throw new PendingException();
+	}
+
+	/**
+	* @Then /^the frequency should also be listed$/
+	*/
+	public function theFrequencyShouldAlsoBeListed()
+	{
+		throw new PendingException();
+	}
+
+	/**
+	* @When /^I click on a song$/
+	*/
+	public function iClickOnASong()
+	{
+		throw new PendingException();
+	}
+
+	/**
+	* @Then /^I should be on the songs lyrics page$/
+	*/
+	public function iShouldBeOnTheSongsLyricsPage()
+	{
+		throw new PendingException();
+	}
+
+	/**
+	* @Given /^I have a the lyrics of a song$/
+	*/
+	public function iHaveATheLyricsOfASong()
+	{
+		throw new PendingException();
+	}
+
+	/**
+	* @Given /^I have the chosen word$/
+	*/
+	public function iHaveTheChosenWord()
+	{
+		throw new PendingException();
+	}
+
+	/**
+	* @Then /^the word should be highlighted$/
+	*/
+	public function theWordShouldBeHighlighted()
+	{
+		throw new PendingException();
 	}
 
 	/**
 	* @Then /^the "([^"]*)" should have at most (\d+) words$/
 	*/
 	public function theShouldHaveAtMostWords($arg1, $arg2)
-	{
-
-		throw new PendingException();
-	}
-
-	/**
-	* @Then /^the "([^"]*)" should be rectangular$/
-	*/
-	public function theShouldBeRectangular($arg1)
 	{
 		throw new PendingException();
 	}
@@ -357,7 +421,6 @@ class FeatureContext extends BehatContext
 	*/
 	public function iClickOnAWord()
 	{
-		//Should move to the lyrics page
 		throw new PendingException();
 	}
 }

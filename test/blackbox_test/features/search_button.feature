@@ -4,11 +4,13 @@ Feature: search button
 	I need to be able to execute a search
 
 Scenario: Search button is clickable
-	Given I have an artist on the "search_bar"
+	Given I am on "http://localhost:8000/"
+	And I have an artist on the "search_bar"
 	Then the "search_button" should be clickable
 
 Scenario: Search button navigates to the "word_cloud_page"
-	Given I have an artist on the "search_bar"
+	Given I am on "http://localhost:8000/"
+	And I have an artist on the "search_bar"
 	When I click the "search_button"
 	Then I should be on the "word_cloud_page"
 
