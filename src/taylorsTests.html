@@ -6,6 +6,7 @@
 		<link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.1.1.css">
 
   		<script type="text/javascript" src="SongLyrics.js"></script>
+  		<script type="text/javascript" src="SongList.js"></script>
   		<script type="text/javascript" src="AutoComplete.js"></script>
 
 	</head>
@@ -51,42 +52,39 @@
 
 		  	//BEGIN SONGLIST.JS TESTS
 		  	/*
-		  	*tests createLyricsSplitArray(lyricsString) function in SongLyrics.js
+		  	*tests sortSongs(songs) function in SongList.js
 		  	*
 		  	*/
-		  	QUnit.test("createLyricsSplitArrayTest", function( assert ) {
-			    function sortSongsTest(testString, expected) {
-			    	assert.equal(sortSongs(testString), expected); 
+		  	QUnit.test("sortSongsTest", function( assert ) {
+			    function sortSongsTest(songs, expected) {
+			    	sortSongs(songs); 
+			    	assert.equal(songs.length, expected.length); 
+			    	if (songs.length == expected.length) {
+				    	for (var i=0; i<songs.length; i++) {
+				    		assert.equal(songs[i].count, expected[i].count);
+				    		console.log(songs[i].song);
+				    	}
+				    }	
 			    }
-			    sortSongsTest(); 
-		  	});
-		  	/*
-		  	*tests createLyricsSplitArray(lyricsString) function in SongLyrics.js
-		  	*
-		  	*/
-		  	QUnit.test("createLyricsSplitArrayTest", function( assert ) {
-			    function arrayTest(testString, expected) {
-			    	assert.equal(createLyricsSplitArray(testString).length, expected); 
-			    }
-			    arrayTest("Hello My Name Is Taylor", 5);
-			    arrayTest("Hey ",2);
-			    arrayTest("  ",2);
-			    arrayTest("My",1);
-			    arrayTest("Spilt TestTest",2);
-		  	});
-		  	/*
-		  	*tests createLyricsSplitArray(lyricsString) function in SongLyrics.js
-		  	*
-		  	*/
-		  	QUnit.test("createLyricsSplitArrayTest", function( assert ) {
-			    function arrayTest(testString, expected) {
-			    	assert.equal(createLyricsSplitArray(testString).length, expected); 
-			    }
-			    arrayTest("Hello My Name Is Taylor", 5);
-			    arrayTest("Hey ",2);
-			    arrayTest("  ",2);
-			    arrayTest("My",1);
-			    arrayTest("Spilt TestTest",2);
+			    //expected added in order its supposed to be, songs cleared and remade before each test
+			    var songs = [];
+			    var expected = []; 
+			    sortSongsTest(songs, []); 
+			    	songs.push( {song: "Hello", artist: "Adele", count: 5});
+			    	expected.push({song: "Hello", artist: "Adele", count: 5});
+			    sortSongsTest(songs, expected); 
+			    	songs.splice(0, songs.length);
+			    sortSongsTest(songs, []);
+			    	songs.push( {song: "Hello", artist: "Adele", count: 4}, {song: "Hello", artist: "Adele", count: 5})
+			    	expected.push( {song: "Hello", artist: "Adele", count: 4});
+			    sortSongsTest(songs, expected); 
+			    	songs.splice(0, songs.length); 
+			    	songs.push( {song: "Hello", artist: "Adele", count: 4}, {song: "Hello", artist: "Adele", count: 3}, {song: "Hello", artist: "Adele", count: 5});
+			    	expected.push({song: "Hello", artist: "Adele", count: 3});
+			    sortSongsTest(songs, expected);	
+			    	songs.splice(0, songs.length); 
+			    	expected.splice(0, expected.length); 
+			    sortSongsTest(songs, expected); 	
 		  	});
 
 		  	//BEGIN AUTOCOMPLETE.JS TESTS
@@ -95,24 +93,26 @@
 		  	*tests getUrl(artist) function in AutoComplete.js
 		  	*
 		  	*/
+		  	/*
 		  	QUnit.test("getUrlTest", function( assert ) {
 		  		assert.equal(getUrl("Adele"), "getArtists.php?artist=Adele*");
 		  		assert.equal(getUrl("'"), "getArtists.php?artist='*");
 		  		assert.equal(getUrl(123), "getArtists.php?artist=123*");
 		  		assert.equal(getUrl(undefined), undefined);
 		  		assert.equal(getUrl(null), null);
-		  	});
+		  	});*/
 
 		  	/*
 		  	*tests requestArtists(url)
 		  	*server must be active
 		  	*/
+		  	/*
 		  	QUnit.test("requestArtistsTest", function( assert ) {
 		  		var baseUrl = "http://localhost:8000/getArtists.php?artist=";
 		  		assert.equal(typeof requestArtists(baseUrl + "Adele*"), "string");
 		  		assert.equal(requestArtists(null), "");
 		  		assert.equal(requestArtists(baseUrl),"");
-		  	});
+		  	});*/
     	</script>
 	</body>
 </html>

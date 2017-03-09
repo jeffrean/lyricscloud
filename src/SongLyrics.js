@@ -41,10 +41,8 @@ function checkHighlightTest(lyricsSplitArray, word) {
 	for (var q = 0; q < lyricsSplitArray.length; q++) {
 		var trimmedWord = lyricsSplitArray[q].trim();
 		word = word.trim();
-		console.log(trimmedWord.toUpperCase(), " ", word.toUpperCase());
 		if (trimmedWord.toUpperCase() === word.toUpperCase()) {
 			// highlight chosen word, so add count of picked by 1
-			console.log("yea");
 			count++;
 		}
 	}
