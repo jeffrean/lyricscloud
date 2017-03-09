@@ -2,12 +2,15 @@
 <html>
 	<head>
 		<title>QUnit Test Suite</title>
-
+		<script type="text/javascript" src="bower_components/blanket/src/blanket.js"></script>
+		<link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css">
+		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
 		<link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.1.1.css">
 
-  		<script type="text/javascript" src="SongLyrics.js"></script>
-  		<script type="text/javascript" src="SongList.js"></script>
-  		<script type="text/javascript" src="AutoComplete.js"></script>
+  		<script type="text/javascript" src="../../src/SongLyrics.js" data-cover></script>
+  		<script type="text/javascript" src="../../src/SongList.js" data-cover></script>
+  		<script type="text/javascript" src="../../src/AutoComplete.js" data-cover></script>
 
 	</head>
 	<body>
@@ -58,13 +61,7 @@
 		  	QUnit.test("sortSongsTest", function( assert ) {
 			    function sortSongsTest(songs, expected) {
 			    	sortSongs(songs); 
-			    	assert.equal(songs.length, expected.length); 
-			    	if (songs.length == expected.length) {
-				    	for (var i=0; i<songs.length; i++) {
-				    		assert.equal(songs[i].count, expected[i].count);
-				    		console.log(songs[i].song);
-				    	}
-				    }	
+			    	assert.deepEqual(songs, expected);
 			    }
 			    //expected added in order its supposed to be, songs cleared and remade before each test
 			    var songs = [];
@@ -86,33 +83,91 @@
 			    	expected.splice(0, expected.length); 
 			    sortSongsTest(songs, expected); 	
 		  	});
+		  	/*
+		  	*tests setSongList(songs) function in SongList.js
+		  	*
+		  	*/
+		  	QUnit.test("setSongListTest", function( assert ) {
+		  		function songListTest(songs, expected) {
+		  			var result = setSongListTest(songs);
+		  			assert.equal(result, expected);
+		  		}
+		  		//establishes songs each time to test if setting to right string
+		  		var songs = [];
+		  		songListTest(songs, ""); 
+		  			songs.push( {song: "Hello", count: 5}); 
+		  		songListTest(songs,"Hello (5) ");
+		  			songs.push( {song: "Bye", count: 3}); 
+		  		songListTest(songs, "Hello (5) Bye (3) ");
+		  			songs.splice(0, songs.length);
+		  		songListTest(songs,"");
+		  	}); 
+		  	/*
+		  	*tests countSongs(songs) function in SongList.js
+		  	*
+		  	*/
+		  	//space at end of all lyrics string because thats how string is established 
+		  	QUnit.test("countSongsTest", function( assert ) {
+		  		function countTest(lyrics, word, expectedCount) {
+		  			var result = countSongsTest(lyrics, word); 
+		  			assert.equal(result, expectedCount); 
+		  		}
+		  		countTest("Hello from the other side ", "hello", 1); 
+		  		countTest("Hello Hello Hello ", "hello", 3); 
+		  		countTest("HELLO, hELLO, ", "hello", 2);
+				countTest(" ", "hello",0); 
+				countTest("HelloHelloHello", "hello", 0);
+				countTest("","",0);
+				countTest(null,null,0);
+		  	})
 
 		  	//BEGIN AUTOCOMPLETE.JS TESTS
 
 		  	/*
 		  	*tests getUrl(artist) function in AutoComplete.js
-		  	*
 		  	*/
-		  	/*
 		  	QUnit.test("getUrlTest", function( assert ) {
 		  		assert.equal(getUrl("Adele"), "getArtists.php?artist=Adele*");
 		  		assert.equal(getUrl("'"), "getArtists.php?artist='*");
 		  		assert.equal(getUrl(123), "getArtists.php?artist=123*");
-		  		assert.equal(getUrl(undefined), undefined);
+		  		assert.equal(getUrl(undefined), null);
 		  		assert.equal(getUrl(null), null);
-		  	});*/
+		  	});
+
+		  	/*
+		  	*tests parseArtists(hits)
+		  	*/
+		  	QUnit.test("parseArtistsTest", function( assert ) {
+		  		assert.equal(parseArtists(""), null);
+		  		assert.equal(parseArtists(123), null);
+		  		assert.equal(parseArtists(undefined), null);
+		  		assert.deepEqual(parseArtists('[{"key":"value"}]'),[{"key":"value"}]);
+		  	});
 
 		  	/*
 		  	*tests requestArtists(url)
 		  	*server must be active
 		  	*/
-		  	/*
 		  	QUnit.test("requestArtistsTest", function( assert ) {
 		  		var baseUrl = "http://localhost:8000/getArtists.php?artist=";
 		  		assert.equal(typeof requestArtists(baseUrl + "Adele*"), "string");
 		  		assert.equal(requestArtists(null), "");
+		  		assert.equal(requestArtists(undefined), "");
 		  		assert.equal(requestArtists(baseUrl),"");
-		  	});*/
+		  	});
+
+		  	/*
+		  	*tests containsArtist
+		  	*/
+		  	QUnit.test("containsArtistTest", function( assert ) {
+		  		assert.equal(containsArtist([{"name":1},{"name":2},{"name":3}],1),true);
+		  		assert.equal(containsArtist([{"name":1},{"name":"Adele"},{"name":false}],"Adele"),true);
+		  		assert.equal(containsArtist([{"name":"Adele"}],"adele"),true);
+		  		assert.notEqual(containsArtist([{"name":"Eminem"}], "Sia"),true);
+		  		assert.equal(containsArtist([],"Future"), false);
+		  	});
+
+		  	//END AUTOCOMPLETE.JS ANSWERS
     	</script>
 	</body>
 </html>

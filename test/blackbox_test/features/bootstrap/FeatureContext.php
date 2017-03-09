@@ -267,6 +267,7 @@ class FeatureContext extends BehatContext
 	*/
 	public function theTitleShouldBeThe($arg1)
 	{
+		$title = $arg1
 	throw new PendingException();
 	}
 
@@ -339,15 +340,8 @@ class FeatureContext extends BehatContext
 	*/
 	public function theShouldHaveAtMostWords($arg1, $arg2)
 	{
-	throw new PendingException();
-	}
 
-	/**
-	* @Then /^each word on the "([^"]*)" should be horizontal$/
-	*/
-	public function eachWordOnTheShouldBeHorizontal($arg1)
-	{
-	throw new PendingException();
+		throw new PendingException();
 	}
 
 	/**
@@ -355,23 +349,7 @@ class FeatureContext extends BehatContext
 	*/
 	public function theShouldBeRectangular($arg1)
 	{
-	throw new PendingException();
-	}
-
-	/**
-	* @Then /^each word on the "([^"]*)" should be colorful$/
-	*/
-	public function eachWordOnTheShouldBeColorful($arg1)
-	{
-	throw new PendingException();
-	}
-
-	/**
-	* @Then /^each word on the "([^"]*)" should be sized porportionally to frequency$/
-	*/
-	public function eachWordOnTheShouldBeSizedPorportionallyToFrequency($arg1)
-	{
-	throw new PendingException();
+		throw new PendingException();
 	}
 
 	/**
@@ -379,6 +357,7 @@ class FeatureContext extends BehatContext
 	*/
 	public function iClickOnAWord()
 	{
-	throw new PendingException();
+		//Should move to the lyrics page
+		throw new PendingException();
 	}
 }
