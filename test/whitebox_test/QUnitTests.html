@@ -12,6 +12,7 @@
   		<script src="../../src/SongLyrics.js" data-cover></script>
   		<script src="../../src/SongList.js" data-cover></script>
   		<script src="../../src/AutoComplete.js" data-cover></script>
+  		<script type="text/javascript" src="../../src/wordcloud.js" data-cover></script>
 
 	</head>
 	<body>
@@ -169,8 +170,80 @@
 
 		  	//END AUTOCOMPLETE.JS ANSWERS
     	</script>
-    	<script type="text/javascript">
-    		function blanket_toggleSource(e){var t=document.getElementById(e);t.style.display==="block"?t.style.display="none":t.style.display="block"}
+    		<div id="search">
+				<script>
+						$(function(){
+						 $("#search").load("../../src/index.html").hide();
+					 });
+				</script>
+		 </div>
+    	<script>
+
+				QUnit.test("AddTOCloudTest", function( assert ) {
+					// without typing in the textfield
+					var JonneObj =
+					{
+						image_url:"https://i.scdn.co/image/8ca4201c5bb1e53c0860c75a797a92b4bb25af4e",
+						name:"Jonne Aaron",
+						popularity:40
+					};
+					document.getElementById("project-search").value = "";
+					localStorage.clear();
+		  		assert.equal( AddTOCloud(), false);
+					localStorage.clear();
+					localStorage.setItem("artistList",JSON.stringify("Adele"));
+					localStorage.setItem("artists",JSON.stringify(new Array(JonneObj)));
+					assert.equal( AddTOCloud(), false);
+					localStorage.clear();
+					localStorage.setItem("artistList",JSON.stringify("Adele,Diddy"));
+					localStorage.setItem("artists",JSON.stringify(new Array(JonneObj)));
+					assert.equal( AddTOCloud(), false);
+					// with typing in the text field
+					document.getElementById("project-search").value = "Jonne Aaron";
+					localStorage.clear();
+					localStorage.setItem("artistList",JSON.stringify("Adele"));
+					assert.equal( AddTOCloud(), true);
+					document.getElementById("project-search").value = "Jonne Aaron";
+					localStorage.clear();
+					localStorage.setItem("artistList",JSON.stringify("Adele"));
+					localStorage.setItem("artists",JSON.stringify(new Array(JonneObj)));
+					assert.equal( AddTOCloud(), true);
+					document.getElementById("project-search").value = "Jonne Aaron";
+					localStorage.clear();
+					localStorage.setItem("artistList",JSON.stringify("Adele,Diddy"));
+					localStorage.setItem("artists",JSON.stringify(new Array(JonneObj)));
+					assert.equal( AddTOCloud(), true);
+		  	});
+
+				QUnit.test("getParameterByNameTest", function( assert ) {
+					assert.equal(getParameterByName('artists','http://localhost/lyricscloud/src/wordcloud.html?artists=Adele'), "Adele");
+
+					assert.equal(getParameterByName('artists','http://localhost/lyricscloud/src/wordcloud.html?artists=Adele,Diddy'), "Adele,Diddy");
+
+					assert.equal(getParameterByName('','http://localhost/lyricscloud/src/wordcloud.html?artists='), "");
+
+				});
+
+				QUnit.test("searchArtistsTest", function( assert ) {
+
+				var ArtistArray = [];
+
+				ArtistArray.push("Adele");
+				searchArtists(ArtistArray);
+				assert.equal(localStorage.getItem("artistList"),"Adele");
+
+				ArtistArray = [];
+				ArtistArray.push("Jonne_Aaron");
+				ArtistArray.push("Diddy");
+				ArtistArray.push("Adele");
+				searchArtists(ArtistArray);
+				assert.equal(localStorage.getItem("artistList"),"Jonne_Aaron,Diddy,Adele");
+
+				ArtistArray = [];
+				ArtistArray.push("");
+				searchArtists(ArtistArray);
+				assert.equal(localStorage.getItem("artistList"),"");
+			});
     	</script>
 	</body>
 </html>
