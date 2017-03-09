@@ -44,6 +44,7 @@ function containsArtist(artists, artistName) {
 
 //parse artist from hits
 function parseArtists(hits) {
+    if(hits === "" || hits === null || hits === undefined) return null;
 	try{
         artists = JSON.parse(hits);
     }
@@ -79,6 +80,7 @@ function search(artist) {
         }
     });
 
+    if($project.data("ui-autocomplete") != null){
     $project.data("ui-autocomplete")._renderItem = function(ul, item) {
 
         var $li = $('<li>'),
@@ -98,7 +100,7 @@ function search(artist) {
 
         return $li.appendTo(ul);
     };
-
+}
 
 })(jQuery);
 

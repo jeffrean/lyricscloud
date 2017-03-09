@@ -21,7 +21,7 @@ if (artistNew.length >= 3 && contains(artistsList.split(','), artistNew) === fal
 }
 function readJSON(file) {
 var request = new XMLHttpRequest();
-request.open('GET', file, false);
+request.open('GET', file, true);
 request.send(null);
 if (request.status == 200)
   return request.responseText;
@@ -44,7 +44,7 @@ var raw_lyrics = "";
 var artists_data = [];
 for(var i = 0; i < artists.length; i++)
 {
-  var raw = readJSON('getLyrics.php?artist=' + artists[i]);
+  var raw = readJSON('http://localhost:8000/getLyrics.php?artist=' + artists[i]);
   var text = JSON.parse(raw);
   for(var j = 0; j < text.songs.length; j++)
   {
@@ -88,9 +88,9 @@ window.fbAsyncInit = function () {
         version: 'v2.8'
     });
     FB.AppEvents.logPageView();
-};
+};});
 
-(function (d, s, id) {
+/*(function (d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) {
         return;
@@ -190,13 +190,13 @@ window.fbAsyncInit = function () {
             ia[i] = byteString.charCodeAt(i);
         }
         return new Blob([ab], {type: 'image/png'});
-    }
+    }*/
 ///////////////////////////////////////////////////////////////////////
-
   var artists = getParameterByName('artists');
   if(artists==null)
   {
     artists = localStorage.getItem("artists");
+  } else {
+    artists = artists.replace(/ /g, "_").split(',');
+    searchArtists(artists);
   }
-  artists = artists.replace(/ /g, "_").split(',');
-  searchArtists(artists);
