@@ -1,22 +1,22 @@
 <!DOCTYPE html>
+<meta charset="utf-8" />
 <html>
 	<head>
 		<title>QUnit Test Suite</title>
-		<script type="text/javascript" src="bower_components/blanket/src/blanket.js"></script>
-		<link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css">
 		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 		<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
-		<link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.1.1.css">
+		<script src="bower_components/qunit/qunit/qunit.js"></script>
+		<link rel="stylesheet" href="bower_components/qunit/qunit/qunit.css">
+		<script src="blanket.min.js"></script>
 
-  		<script type="text/javascript" src="../../src/SongLyrics.js" data-cover></script>
-  		<script type="text/javascript" src="../../src/SongList.js" data-cover></script>
-  		<script type="text/javascript" src="../../src/AutoComplete.js" data-cover></script>
+  		<script src="../../src/SongLyrics.js" data-cover></script>
+  		<script src="../../src/SongList.js" data-cover></script>
+  		<script src="../../src/AutoComplete.js" data-cover></script>
 
 	</head>
 	<body>
     	<div id="qunit"></div>
     	<div id="qunit-fixture"></div>
-    	<script src="https://code.jquery.com/qunit/qunit-2.1.1.js"></script>
     	<script>
 
     		//BEGIN SONGLYRICS.JS TESTS
@@ -168,6 +168,9 @@
 		  	});
 
 		  	//END AUTOCOMPLETE.JS ANSWERS
+    	</script>
+    	<script type="text/javascript">
+    		function blanket_toggleSource(e){var t=document.getElementById(e);t.style.display==="block"?t.style.display="none":t.style.display="block"}
     	</script>
 	</body>
 </html>
