@@ -22,6 +22,15 @@ function countSongs(songs) {
 	return songs; 
 }
 
+//countSongs test to see if it properly counts a word within lyrics given stop characters 
+function countSongsTest(lyrics, word) {
+	var count = (lyrics.match(new RegExp(word + ' ', "gi")) || []).length;
+	count += (lyrics.match(new RegExp(word + ',', "gi")) || []).length;
+	count += (lyrics.match(new RegExp(word + '\n', "gi")) || []).length;
+	count += (lyrics.match(new RegExp(word + '\r', "gi")) || []).length; 
+	return count; 
+}
+
 //sort Songs by frequency of word appearance 
 function sortSongs(songs) {
 	songs.sort(function (a, b) {
