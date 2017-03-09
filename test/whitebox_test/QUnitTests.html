@@ -1,22 +1,23 @@
 <!DOCTYPE html>
+<meta charset="utf-8" />
 <html>
 	<head>
 		<title>QUnit Test Suite</title>
-		<script type="text/javascript" src="bower_components/blanket/src/blanket.js"></script>
-		<link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css">
 		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 		<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
-		<link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.1.1.css">
+		<script src="bower_components/qunit/qunit/qunit.js"></script>
+		<link rel="stylesheet" href="bower_components/qunit/qunit/qunit.css">
+		<script src="blanket.min.js"></script>
 
-  		<script type="text/javascript" src="../../src/SongLyrics.js" data-cover></script>
-  		<script type="text/javascript" src="../../src/SongList.js" data-cover></script>
-  		<script type="text/javascript" src="../../src/AutoComplete.js" data-cover></script>
+  		<script src="../../src/SongLyrics.js" data-cover></script>
+  		<script src="../../src/SongList.js" data-cover></script>
+  		<script src="../../src/AutoComplete.js" data-cover></script>
+  		<script type="text/javascript" src="../../src/wordcloud.js" data-cover></script>
 
 	</head>
 	<body>
     	<div id="qunit"></div>
     	<div id="qunit-fixture"></div>
-    	<script src="https://code.jquery.com/qunit/qunit-2.1.1.js"></script>
     	<script>
 
     		//BEGIN SONGLYRICS.JS TESTS
@@ -168,6 +169,81 @@
 		  	});
 
 		  	//END AUTOCOMPLETE.JS ANSWERS
+    	</script>
+    		<div id="search">
+				<script>
+						$(function(){
+						 $("#search").load("../../src/index.html").hide();
+					 });
+				</script>
+		 </div>
+    	<script>
+
+				QUnit.test("AddTOCloudTest", function( assert ) {
+					// without typing in the textfield
+					var JonneObj =
+					{
+						image_url:"https://i.scdn.co/image/8ca4201c5bb1e53c0860c75a797a92b4bb25af4e",
+						name:"Jonne Aaron",
+						popularity:40
+					};
+					document.getElementById("project-search").value = "";
+					localStorage.clear();
+		  		assert.equal( AddTOCloud(), false);
+					localStorage.clear();
+					localStorage.setItem("artistList",JSON.stringify("Adele"));
+					localStorage.setItem("artists",JSON.stringify(new Array(JonneObj)));
+					assert.equal( AddTOCloud(), false);
+					localStorage.clear();
+					localStorage.setItem("artistList",JSON.stringify("Adele,Diddy"));
+					localStorage.setItem("artists",JSON.stringify(new Array(JonneObj)));
+					assert.equal( AddTOCloud(), false);
+					// with typing in the text field
+					document.getElementById("project-search").value = "Jonne Aaron";
+					localStorage.clear();
+					localStorage.setItem("artistList",JSON.stringify("Adele"));
+					assert.equal( AddTOCloud(), true);
+					document.getElementById("project-search").value = "Jonne Aaron";
+					localStorage.clear();
+					localStorage.setItem("artistList",JSON.stringify("Adele"));
+					localStorage.setItem("artists",JSON.stringify(new Array(JonneObj)));
+					assert.equal( AddTOCloud(), true);
+					document.getElementById("project-search").value = "Jonne Aaron";
+					localStorage.clear();
+					localStorage.setItem("artistList",JSON.stringify("Adele,Diddy"));
+					localStorage.setItem("artists",JSON.stringify(new Array(JonneObj)));
+					assert.equal( AddTOCloud(), true);
+		  	});
+
+				QUnit.test("getParameterByNameTest", function( assert ) {
+					assert.equal(getParameterByName('artists','http://localhost/lyricscloud/src/wordcloud.html?artists=Adele'), "Adele");
+
+					assert.equal(getParameterByName('artists','http://localhost/lyricscloud/src/wordcloud.html?artists=Adele,Diddy'), "Adele,Diddy");
+
+					assert.equal(getParameterByName('','http://localhost/lyricscloud/src/wordcloud.html?artists='), "");
+
+				});
+
+				QUnit.test("searchArtistsTest", function( assert ) {
+
+				var ArtistArray = [];
+
+				ArtistArray.push("Adele");
+				searchArtists(ArtistArray);
+				assert.equal(localStorage.getItem("artistList"),"Adele");
+
+				ArtistArray = [];
+				ArtistArray.push("Jonne_Aaron");
+				ArtistArray.push("Diddy");
+				ArtistArray.push("Adele");
+				searchArtists(ArtistArray);
+				assert.equal(localStorage.getItem("artistList"),"Jonne_Aaron,Diddy,Adele");
+
+				ArtistArray = [];
+				ArtistArray.push("");
+				searchArtists(ArtistArray);
+				assert.equal(localStorage.getItem("artistList"),"");
+			});
     	</script>
 	</body>
 </html>
