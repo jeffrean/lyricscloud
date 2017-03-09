@@ -6,6 +6,7 @@
 		<link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.1.1.css">
 
   		<script type="text/javascript" src="SongLyrics.js"></script>
+  		<script type="text/javascript" src="SongList.js"></script>
   		<script type="text/javascript" src="AutoComplete.js"></script>
 
 	</head>
@@ -51,43 +52,71 @@
 
 		  	//BEGIN SONGLIST.JS TESTS
 		  	/*
-		  	*tests createLyricsSplitArray(lyricsString) function in SongLyrics.js
+		  	*tests sortSongs(songs) function in SongList.js
 		  	*
 		  	*/
-		  	QUnit.test("createLyricsSplitArrayTest", function( assert ) {
-			    function sortSongsTest(testString, expected) {
-			    	assert.equal(sortSongs(testString), expected); 
+		  	QUnit.test("sortSongsTest", function( assert ) {
+			    function sortSongsTest(songs, expected) {
+			    	sortSongs(songs); 
+			    	assert.deepEqual(songs, expected);
 			    }
-			    sortSongsTest(); 
+			    //expected added in order its supposed to be, songs cleared and remade before each test
+			    var songs = [];
+			    var expected = []; 
+			    sortSongsTest(songs, []); 
+			    	songs.push( {song: "Hello", artist: "Adele", count: 5});
+			    	expected.push({song: "Hello", artist: "Adele", count: 5});
+			    sortSongsTest(songs, expected); 
+			    	songs.splice(0, songs.length);
+			    sortSongsTest(songs, []);
+			    	songs.push( {song: "Hello", artist: "Adele", count: 4}, {song: "Hello", artist: "Adele", count: 5})
+			    	expected.push( {song: "Hello", artist: "Adele", count: 4});
+			    sortSongsTest(songs, expected); 
+			    	songs.splice(0, songs.length); 
+			    	songs.push( {song: "Hello", artist: "Adele", count: 4}, {song: "Hello", artist: "Adele", count: 3}, {song: "Hello", artist: "Adele", count: 5});
+			    	expected.push({song: "Hello", artist: "Adele", count: 3});
+			    sortSongsTest(songs, expected);	
+			    	songs.splice(0, songs.length); 
+			    	expected.splice(0, expected.length); 
+			    sortSongsTest(songs, expected); 	
 		  	});
 		  	/*
-		  	*tests createLyricsSplitArray(lyricsString) function in SongLyrics.js
+		  	*tests setSongList(songs) function in SongList.js
 		  	*
 		  	*/
-		  	QUnit.test("createLyricsSplitArrayTest", function( assert ) {
-			    function arrayTest(testString, expected) {
-			    	assert.equal(createLyricsSplitArray(testString).length, expected); 
-			    }
-			    arrayTest("Hello My Name Is Taylor", 5);
-			    arrayTest("Hey ",2);
-			    arrayTest("  ",2);
-			    arrayTest("My",1);
-			    arrayTest("Spilt TestTest",2);
-		  	});
+		  	QUnit.test("setSongListTest", function( assert ) {
+		  		function songListTest(songs, expected) {
+		  			var result = setSongListTest(songs);
+		  			assert.equal(result, expected);
+		  		}
+		  		//establishes songs each time to test if setting to right string
+		  		var songs = [];
+		  		songListTest(songs, ""); 
+		  			songs.push( {song: "Hello", count: 5}); 
+		  		songListTest(songs,"Hello (5) ");
+		  			songs.push( {song: "Bye", count: 3}); 
+		  		songListTest(songs, "Hello (5) Bye (3) ");
+		  			songs.splice(0, songs.length);
+		  		songListTest(songs,"");
+		  	}); 
 		  	/*
-		  	*tests createLyricsSplitArray(lyricsString) function in SongLyrics.js
+		  	*tests countSongs(songs) function in SongList.js
 		  	*
 		  	*/
-		  	QUnit.test("createLyricsSplitArrayTest", function( assert ) {
-			    function arrayTest(testString, expected) {
-			    	assert.equal(createLyricsSplitArray(testString).length, expected); 
-			    }
-			    arrayTest("Hello My Name Is Taylor", 5);
-			    arrayTest("Hey ",2);
-			    arrayTest("  ",2);
-			    arrayTest("My",1);
-			    arrayTest("Spilt TestTest",2);
-		  	});
+		  	//space at end of all lyrics string because thats how string is established 
+		  	QUnit.test("countSongsTest", function( assert ) {
+		  		function countTest(lyrics, word, expectedCount) {
+		  			var result = countSongsTest(lyrics, word); 
+		  			assert.equal(result, expectedCount); 
+		  		}
+		  		countTest("Hello from the other side ", "hello", 1); 
+		  		countTest("Hello Hello Hello ", "hello", 3); 
+		  		countTest("HELLO, hELLO, ", "hello", 2);
+				countTest(" ", "hello",0); 
+				countTest("HelloHelloHello", "hello", 0);
+				countTest("","",0);
+				countTest(null,null,0);
+		  	})
 
 		  	//BEGIN AUTOCOMPLETE.JS TESTS
 
@@ -95,24 +124,26 @@
 		  	*tests getUrl(artist) function in AutoComplete.js
 		  	*
 		  	*/
+		  	/*
 		  	QUnit.test("getUrlTest", function( assert ) {
 		  		assert.equal(getUrl("Adele"), "getArtists.php?artist=Adele*");
 		  		assert.equal(getUrl("'"), "getArtists.php?artist='*");
 		  		assert.equal(getUrl(123), "getArtists.php?artist=123*");
 		  		assert.equal(getUrl(undefined), undefined);
 		  		assert.equal(getUrl(null), null);
-		  	});
+		  	});*/
 
 		  	/*
 		  	*tests requestArtists(url)
 		  	*server must be active
 		  	*/
+		  	/*
 		  	QUnit.test("requestArtistsTest", function( assert ) {
 		  		var baseUrl = "http://localhost:8000/getArtists.php?artist=";
 		  		assert.equal(typeof requestArtists(baseUrl + "Adele*"), "string");
 		  		assert.equal(requestArtists(null), "");
 		  		assert.equal(requestArtists(baseUrl),"");
-		  	});
+		  	});*/
     	</script>
 	</body>
 </html>
