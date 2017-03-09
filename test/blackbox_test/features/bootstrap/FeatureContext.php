@@ -37,6 +37,8 @@ class FeatureContext extends BehatContext
 	 */
 	public function shouldBeEmpty($arg1)
 	{
+		//if ($driver.findElement(By.id("project-search"));
+
 		//throw new PendingException();
 	}
 }
