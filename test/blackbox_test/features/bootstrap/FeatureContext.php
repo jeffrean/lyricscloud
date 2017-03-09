@@ -76,7 +76,13 @@ class FeatureContext extends BehatContext
 	 */
 	public function iTypeIntoThe($arg1, $arg2)
 	{
-		throw new PendingException();
+		$id_name = name_translation($arg1);
+		$textbox = $this->drive->findElement(
+			WebDriverBy::id($id_name);
+		)
+		$textbox->setValue($arg2);
+		if(strcmp($textbox->getValue(), $arg2) != 0)
+			throw new PendingException();
 	}
 
 	/**
@@ -84,6 +90,7 @@ class FeatureContext extends BehatContext
 	 */
 	public function theShouldBeClickable($arg1)
 	{
+		$id_name = name_translation($arg1);
 		throw new PendingException();
 	}
 
