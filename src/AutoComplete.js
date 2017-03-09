@@ -117,11 +117,6 @@ function callGetLyrics(artist, lyricsList){
 
 function callGetSongList() {
 	artist = document.getElementById("project-search").value;
-    if (containsArtist(artists, artist)) {
-			window.location.href = "wordcloud.html?artists=" + artist;
-    } else {
-        alert("Please enter a valid artist name!");
-    }
 }
 
 function refresh() {
