@@ -43,3 +43,12 @@ function setSongList(songs) {
 		$("#lyrics").append(li.concat(songs[i].song + " (" + songs[i].count) + ')')
 	}
 }
+
+//changes appending html to counting to establish if function works 
+function setSongListTest(songs) {
+	var songString = ""; 
+	for (var i in songs) {
+		songString+=  songs[i].song + " (" + songs[i].count + ') '; 
+	}
+	return songString; 
+}

@@ -62,7 +62,6 @@
 			    	if (songs.length == expected.length) {
 				    	for (var i=0; i<songs.length; i++) {
 				    		assert.equal(songs[i].count, expected[i].count);
-				    		console.log(songs[i].song);
 				    	}
 				    }	
 			    }
@@ -86,6 +85,25 @@
 			    	expected.splice(0, expected.length); 
 			    sortSongsTest(songs, expected); 	
 		  	});
+		  	/*
+		  	*tests setSongList(songs) function in SongList.js
+		  	*
+		  	*/
+		  	QUnit.test("setSongListTest", function( assert ) {
+		  		function songListTest(songs, expected) {
+		  			var result = setSongListTest(songs);
+		  			assert.equal(result, expected);
+		  		}
+		  		//establishes songs each time to test if setting to right string
+		  		var songs = [];
+		  		songListTest(songs, ""); 
+		  			songs.push( {song: "Hello", count: 5}); 
+		  		songListTest(songs,"Hello (5) ");
+		  			songs.push( {song: "Bye", count: 3}); 
+		  		songListTest(songs, "Hello (5) Bye (3) ");
+		  			songs.splice(0, songs.length);
+		  		songListTest(songs,"");
+		  	}); 
 
 		  	//BEGIN AUTOCOMPLETE.JS TESTS
 
