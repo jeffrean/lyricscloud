@@ -58,12 +58,7 @@
 		  	QUnit.test("sortSongsTest", function( assert ) {
 			    function sortSongsTest(songs, expected) {
 			    	sortSongs(songs); 
-			    	assert.equal(songs.length, expected.length); 
-			    	if (songs.length == expected.length) {
-				    	for (var i=0; i<songs.length; i++) {
-				    		assert.equal(songs[i].count, expected[i].count);
-				    	}
-				    }	
+			    	assert.deepEqual(songs, expected);
 			    }
 			    //expected added in order its supposed to be, songs cleared and remade before each test
 			    var songs = [];
@@ -104,6 +99,24 @@
 		  			songs.splice(0, songs.length);
 		  		songListTest(songs,"");
 		  	}); 
+		  	/*
+		  	*tests countSongs(songs) function in SongList.js
+		  	*
+		  	*/
+		  	//space at end of all lyrics string because thats how string is established 
+		  	QUnit.test("countSongsTest", function( assert ) {
+		  		function countTest(lyrics, word, expectedCount) {
+		  			var result = countSongsTest(lyrics, word); 
+		  			assert.equal(result, expectedCount); 
+		  		}
+		  		countTest("Hello from the other side ", "hello", 1); 
+		  		countTest("Hello Hello Hello ", "hello", 3); 
+		  		countTest("HELLO, hELLO, ", "hello", 2);
+				countTest(" ", "hello",0); 
+				countTest("HelloHelloHello", "hello", 0);
+				countTest("","",0);
+				countTest(null,null,0);
+		  	})
 
 		  	//BEGIN AUTOCOMPLETE.JS TESTS
 
