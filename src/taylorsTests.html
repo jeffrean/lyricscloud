@@ -2,7 +2,9 @@
 <html>
 	<head>
 		<title>QUnit Test Suite</title>
-
+		<link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
+		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"><
 		<link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.1.1.css">
 
   		<script type="text/javascript" src="SongLyrics.js"></script>
@@ -122,28 +124,49 @@
 
 		  	/*
 		  	*tests getUrl(artist) function in AutoComplete.js
-		  	*
 		  	*/
-		  	/*
 		  	QUnit.test("getUrlTest", function( assert ) {
 		  		assert.equal(getUrl("Adele"), "getArtists.php?artist=Adele*");
 		  		assert.equal(getUrl("'"), "getArtists.php?artist='*");
 		  		assert.equal(getUrl(123), "getArtists.php?artist=123*");
-		  		assert.equal(getUrl(undefined), undefined);
+		  		assert.equal(getUrl(undefined), null);
 		  		assert.equal(getUrl(null), null);
-		  	});*/
+		  	});
+
+		  	/*
+		  	*tests parseArtists(hits)
+		  	*/
+		  	QUnit.test("parseArtistsTest", function( assert ) {
+		  		assert.equal(parseArtists(""), null);
+		  		assert.equal(parseArtists(123), null);
+		  		assert.equal(parseArtists(undefined), null);
+		  		assert.deepEqual(parseArtists('[{"key":"value"}]'),[{"key":"value"}]);
+		  	});
 
 		  	/*
 		  	*tests requestArtists(url)
 		  	*server must be active
 		  	*/
-		  	/*
 		  	QUnit.test("requestArtistsTest", function( assert ) {
 		  		var baseUrl = "http://localhost:8000/getArtists.php?artist=";
 		  		assert.equal(typeof requestArtists(baseUrl + "Adele*"), "string");
 		  		assert.equal(requestArtists(null), "");
+		  		assert.equal(requestArtists(undefined), "");
 		  		assert.equal(requestArtists(baseUrl),"");
-		  	});*/
+		  	});
+
+		  	/*
+		  	*tests containsArtist
+		  	*/
+		  	QUnit.test("containsArtistTest", function( assert ) {
+		  		assert.equal(containsArtist([{"name":1},{"name":2},{"name":3}],1),true);
+		  		assert.equal(containsArtist([{"name":1},{"name":"Adele"},{"name":false}],"Adele"),true);
+		  		assert.equal(containsArtist([{"name":"Adele"}],"adele"),true);
+		  		assert.notEqual(containsArtist([{"name":"Eminem"}], "Sia"),true);
+		  		assert.equal(containsArtist([],"Future"), false);
+		  	});
+
+		  	//END AUTOCOMPLETE.JS ANSWERS
     	</script>
 	</body>
 </html>
