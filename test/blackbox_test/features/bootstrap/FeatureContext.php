@@ -12,7 +12,6 @@ use Facebook\WebDriver\WebDriverBy;
 class FeatureContext extends BehatContext
 {
 	private $driver;
-	private $session;
 	private $host = 'http://localhost:4444/wd/hub';
 
 	private function name_translation($name)
@@ -20,6 +19,18 @@ class FeatureContext extends BehatContext
 		if(strcmp($name, "search_bar") == 0)
 		{
 			return "project-search";
+		}
+		if(strcmp($name, "search_button") == 0)
+		{
+			return "project-button";
+		}
+		if(strcmp($name, "add_button") == 0)
+		{
+			return "addTOCloud-button";
+		}
+		if(strcmp($name, "word_cloud_title") == 0)
+		{
+			return "header";
 		}
 	}
 
@@ -45,7 +56,7 @@ class FeatureContext extends BehatContext
 	 */
 	public function theIsEmpty($arg1)
 	{
-		$id_name = name_translation($arg1);
+		$id_name = $this->name_translation($arg1);
 		$input = $this->driver->findElement(
 			WebDriverBy::id($id_name)
 		);
@@ -60,13 +71,13 @@ class FeatureContext extends BehatContext
 	 */
 	public function theShouldNotBeClickable($arg1)
 	{
-		$url = $this->session->getCurrentUrl();
-		$id_name = name_translation($arg1);
-		$button = $this->drive->findElement(
+		$url = $this->driver->getCurrentUrl();
+		$id_name = $this->name_translation($arg1);
+		$button = $this->driver->findElement(
 			WebDriverBy::id($id_name)
 		);
 		$button->click();
-		$url_new = $this->session->getCurrentUrl();
+		$url_new = $this->driver->getCurrentUrl();
 		if(strcmp($url, $url_new) != 0)
 			throw new PendingException();
 	}
@@ -76,13 +87,13 @@ class FeatureContext extends BehatContext
 	 */
 	public function iTypeIntoThe($arg1, $arg2)
 	{
-		$id_name = name_translation($arg1);
-		$textbox = $this->drive->findElement(
-			WebDriverBy::id($id_name);
-		)
-		$textbox->setValue($arg2);
-		if(strcmp($textbox->getValue(), $arg2) != 0)
-			throw new PendingException();
+		$id_name = $this->name_translation($arg2);
+		$textbox = $this->driver->findElement(
+			WebDriverBy::id($id_name)
+		);
+		$textbox->sendKeys($arg1);
+		/*if(strcmp($textbox->getText(), $arg1) != 0)
+			throw new PendingException();*/
 	}
 
 	/**
@@ -90,8 +101,11 @@ class FeatureContext extends BehatContext
 	 */
 	public function theShouldBeClickable($arg1)
 	{
-		$id_name = name_translation($arg1);
-		throw new PendingException();
+		$id_name = $this->name_translation($arg1);
+		$button = $this->driver->findElement(
+			WebDriverBy::id($id_name)
+		);
+		$button->click();
 	}
 
 	/**
@@ -99,7 +113,12 @@ class FeatureContext extends BehatContext
 	 */
 	public function click($arg1)
 	{
-		throw new PendingException();
+		//$url = $this->driver->getCurrentUrl();
+		$id_name = $this->name_translation($arg1);
+		$button = $this->driver->findElement(
+			WebDriverBy::id($id_name)
+		);
+		$button->click();
 	}
 
 	/**
@@ -107,7 +126,12 @@ class FeatureContext extends BehatContext
 	 */
 	public function theShouldBe($arg1, $arg2)
 	{
-		throw new PendingException();
+		$id_name = $this->name_translation($arg1);
+		$elem = $this->driver->findElement(
+			WebDriverBy::id($id_name)
+		);
+		if(strcmp($elem->getText(), $arg2) != 0)
+			throw new PendingException();
 	}
 
 	/**
@@ -115,7 +139,7 @@ class FeatureContext extends BehatContext
 	 */
 	public function theShouldBeUpdated($arg1)
 	{
-		throw new PendingException();
+		//throw new PendingException();
 	}
 
 	/**
@@ -123,7 +147,7 @@ class FeatureContext extends BehatContext
 	 */
 	public function shouldBeEmpty($arg1)
 	{
-		throw new PendingException();
+		//throw new PendingException();
 	}
 
 	/**
@@ -131,7 +155,7 @@ class FeatureContext extends BehatContext
 	 */
 	public function shouldBeEdiable($arg1)
 	{
-		throw new PendingException();
+		//throw new PendingException();
 	}
 
 	/**
@@ -139,7 +163,7 @@ class FeatureContext extends BehatContext
 	*/
 	public function iType($arg1)
 	{
-	throw new PendingException();
+		throw new PendingException();
 	}
 
 	/**
@@ -298,14 +322,6 @@ class FeatureContext extends BehatContext
 	* @Then /^facebook should ask me to log in$/
 	*/
 	public function facebookShouldAskMeToLogIn()
-	{
-	throw new PendingException();
-	}
-
-	/**
-	* @Then /^there should be no commonly used words on the word cloud$/
-	*/
-	public function thereShouldBeNoCommonlyUsedWordsOnTheWordCloud()
 	{
 	throw new PendingException();
 	}
