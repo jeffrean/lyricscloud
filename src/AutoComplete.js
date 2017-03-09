@@ -17,19 +17,26 @@ function requestArtists(url) {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
         if (xhr.readyState == XMLHttpRequest.DONE) {
-            parseArtists(JSON.parse(xhr.responseText));
+            parseArtists(xhr.responseText);
         }
     }
     xhr.open('GET', url, true);
     xhr.setRequestHeader("Accept", "");
     xhr.send(null);
+    return xhr.responseText;
 }
 
 //returns true if elem -> items (false otherwise)
 function containsArtist(artists, artistName) {
     for (var i = 0; i < artists.length; i++) {
-        if (artists[i].name.toLowerCase() == artistName.toLowerCase()) {
-            return true;
+        if(typeof artists[i].name != "string"){
+            if (artists[i].name == artistName) {
+                return true;
+            }
+        } else {
+            if (artists[i].name.toLowerCase() == artistName.toLowerCase()) {
+                return true;
+            }
         }
     }
     return false;
@@ -37,28 +44,13 @@ function containsArtist(artists, artistName) {
 
 //parse artist from hits
 function parseArtists(hits) {
-	artists = [];
-	//add new artists to list
-	/*for (var i = 0; i < hits.length; i++) {
-	  if (hits[i] !== undefined && hits[i].result !== undefined &&
-		   hits[i].result.primary_artist !== undefined) {
-		   var artist = {
-		           "name": hits[i].result.primary_artist.name,
-		           //"id": hits[i].result.primary_artist.id,
-		           "image_url": hits[i].result.primary_artist.image_url
-		       }
-		       //check if list already contains artist
-		   if (!containsArtist(artists, artist.name)) {
-		       artists.push(artist);
-		   }
-	  } else {
-		   console.log("undefined");
-	  }
-	}*/
-
-	// using spotify
-	artists = hits;
-
+	try{
+        artists = JSON.parse(hits);
+    }
+    catch(e){
+        return null;
+    }
+    return artists;
 }
 
 function search(artist) {
@@ -73,10 +65,10 @@ function search(artist) {
         source: function(request, response) {
             search(request.term.slice(0,request.term.length-1));
             if(request.term.length >= 3){
-							response(artists);
-						}else {
-							response({});
-						}
+				response(artists);
+			}else {
+				response({});
+			}
         },
         focus: function(event, ui) {
             $project.val(ui.item.name);
